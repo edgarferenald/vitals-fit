@@ -26,13 +26,13 @@ export async function analyzeFoodImage(base64Image: string): Promise<FoodAnalysi
             const error = await response.json();
             console.error("API Error:", error);
 
-            // Return mock data on error for demo purposes
-            console.log("Returning mock data due to API error");
+            // Return unrecognized food data on error
+            console.log("Returning unrecognized food data due to API error");
             return {
-                food_name: "Салат с курицей гриль",
-                calories: 450,
-                macros: { protein: 40, fat: 15, carbs: 10 },
-                recipe_suggestion: "Добавьте оливковое масло для полезных жиров."
+                food_name: "Блюдо не распознано",
+                calories: 0,
+                macros: { protein: 0, fat: 0, carbs: 0 },
+                recipe_suggestion: "Введите калории вручную или сделайте новое фото."
             };
         }
 
@@ -42,12 +42,12 @@ export async function analyzeFoodImage(base64Image: string): Promise<FoodAnalysi
     } catch (error) {
         console.error("Error analyzing food:", error);
 
-        // Return mock data on error
+        // Return unrecognized food data on error
         return {
-            food_name: "Салат с курицей гриль",
-            calories: 450,
-            macros: { protein: 40, fat: 15, carbs: 10 },
-            recipe_suggestion: "Добавьте оливковое масло для полезных жиров."
+            food_name: "Блюдо не распознано",
+            calories: 0,
+            macros: { protein: 0, fat: 0, carbs: 0 },
+            recipe_suggestion: "Введите калории вручную или сделайте новое фото."
         };
     }
 }
