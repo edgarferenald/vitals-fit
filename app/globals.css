@@ -1,26 +1,96 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Fonts */
+  --font-orbitron: var(--font-orbitron);
+  --font-inter: var(--font-inter);
 
-@theme inline {
+  /* Colors */
+  --color-neon-green: #00FF94;
+  --color-neon-blue: #00F0FF;
+  --color-neon-pink: #FF003C;
+  --color-neon-yellow: #FCEE0A;
+
+  --color-cyber-black: #050505;
+  --color-cyber-gray: #121212;
+  --color-cyber-glass: rgba(255, 255, 255, 0.05);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Shadows */
+  --shadow-neon-green: 0 0 10px #00FF94, 0 0 20px rgba(0, 255, 148, 0.4);
+  --shadow-neon-blue: 0 0 10px #00F0FF, 0 0 20px rgba(0, 240, 255, 0.4);
+  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+  /* Background Images */
+  --image-cyber-grid: linear-gradient(to right, #1f1f1f 1px, transparent 1px), linear-gradient(to bottom, #1f1f1f 1px, transparent 1px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Custom Utilities */
+@utility glass-panel {
+  @apply backdrop-blur-md bg-white/5 border border-white/10 shadow-glass;
+}
+
+@utility text-glow {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+@utility neon-border {
+  box-shadow: 0 0 5px var(--color-neon-green), inset 0 0 5px var(--color-neon-green);
+  border: 1px solid var(--color-neon-green);
+}
+
+@utility cyber-bg {
+  background-color: #050505;
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(0, 255, 148, 0.03) 0%, transparent 50%),
+    linear-gradient(0deg, transparent 24%, rgba(32, 32, 32, 0.5) 25%, rgba(32, 32, 32, 0.5) 26%, transparent 27%, transparent 74%, rgba(32, 32, 32, 0.5) 75%, rgba(32, 32, 32, 0.5) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(32, 32, 32, 0.5) 25%, rgba(32, 32, 32, 0.5) 26%, transparent 27%, transparent 74%, rgba(32, 32, 32, 0.5) 75%, rgba(32, 32, 32, 0.5) 76%, transparent 77%, transparent);
+  background-size: 100% 100%, 50px 50px, 50px 50px;
+}
+
+:root {
+  --background: #050505;
+  --foreground: #ffffff;
+  --font-orbitron: 'Orbitron', sans-serif;
+  /* Fallback */
+  --font-inter: 'Inter', sans-serif;
+  /* Fallback */
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-foreground);
+  background: var(--color-background);
+  font-family: var(--font-inter);
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-orbitron);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cyber-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f1f1f;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neon-green);
 }
