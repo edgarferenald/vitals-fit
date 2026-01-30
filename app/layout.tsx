@@ -21,8 +21,8 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${orbitron.variable} antialiased cyber-bg min-h-screen text-white`}
       >
-        <main className="relative z-10 max-w-md mx-auto min-h-screen flex flex-col">
-          {/* Mobile-first container max-w-md to simulate app on desktop */}
+        <main className="relative z-10 w-full max-w-7xl mx-auto min-h-screen flex flex-col px-4 sm:px-6 lg:px-8">
+          {/* Fullscreen responsive container */}
           {children}
         </main>
 

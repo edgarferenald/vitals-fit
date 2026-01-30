@@ -19,13 +19,13 @@ export default function WaterWidget() {
     const percentage = Math.min((waterAmount / goal) * 100, 100);
 
     return (
-        <GlassCard className="flex flex-col gap-4">
+        <GlassCard className="flex-1 flex flex-col gap-4">
             <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-neon-blue">
-                    <Droplets className="w-6 h-6 animate-pulse" />
-                    <h3 className="text-lg font-bold uppercase tracking-wider">Вода</h3>
+                <div className="flex items-center gap-2 lg:gap-3 text-neon-blue">
+                    <Droplets className="w-6 h-6 lg:w-8 lg:h-8 animate-pulse" />
+                    <h3 className="text-lg lg:text-xl font-bold uppercase tracking-wider">Вода</h3>
                 </div>
-                <span className="text-2xl font-orbitron">{waterAmount} ml</span>
+                <span className="text-2xl lg:text-3xl font-orbitron">{waterAmount} мл</span>
             </div>
 
             {/* Progress Bar */}
