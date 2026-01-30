@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-    const API_KEY = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    const API_KEY = process.env.OPENROUTER_API_KEY;
 
-    console.log("Server API Key status:", API_KEY ? "Present (length: " + API_KEY.length + ")" : "Missing");
+    console.log("OpenRouter API Key status:", API_KEY ? "Present" : "Missing");
 
     if (!API_KEY) {
         return NextResponse.json(
-            { error: "API key not configured" },
+            { error: "OpenRouter API key not configured" },
             { status: 500 }
         );
     }
@@ -22,13 +22,10 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Clean base64 string if it contains metadata header
-        const cleanBase64 = image.replace(/^data:image\/[a-z]+;base64,/, "");
-
         const prompt = `Проанализируй это изображение еды. Определи блюдо, оцени калории и разбей макронутриенты (белки, жиры, углеводы) в граммах.
 Также дай очень краткий совет по рецепту или здоровью.
 
-ВАЖНО: Все текстовые поля (food_name и recipe_suggestion) должны быть на РУССКОМ языке!
+ВАЖНО: Все текстовые поля должны быть на РУССКОМ языке!
 
 Верни результат ТОЛЬКО как валидный JSON объект со следующей структурой:
 {
@@ -43,54 +40,54 @@ export async function POST(request: NextRequest) {
 }
 Не включай форматирование markdown. Только чистый JSON.`;
 
-        // Use REST API directly with v1beta endpoint and gemini-pro-vision
-        const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=${API_KEY}`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    contents: [
-                        {
-                            parts: [
-                                { text: prompt },
-                                {
-                                    inline_data: {
-                                        mime_type: "image/jpeg",
-                                        data: cleanBase64,
-                                    },
+        // Use OpenRouter API with a vision model
+        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${API_KEY}`,
+                "Content-Type": "application/json",
+                "HTTP-Referer": "https://vitals-fit-xi.vercel.app",
+                "X-Title": "Vitals Fitness App",
+            },
+            body: JSON.stringify({
+                model: "google/gemini-2.0-flash-001",
+                messages: [
+                    {
+                        role: "user",
+                        content: [
+                            { type: "text", text: prompt },
+                            {
+                                type: "image_url",
+                                image_url: {
+                                    url: image.startsWith("data:") ? image : `data:image/jpeg;base64,${image}`,
                                 },
-                            ],
-                        },
-                    ],
-                    generationConfig: {
-                        temperature: 0.4,
-                        maxOutputTokens: 1024,
+                            },
+                        ],
                     },
-                }),
-            }
-        );
+                ],
+                max_tokens: 1024,
+                temperature: 0.4,
+            }),
+        });
 
         const data = await response.json();
-        console.log("Gemini API Response status:", response.status);
-        console.log("Gemini API Response:", JSON.stringify(data).substring(0, 500));
+        console.log("OpenRouter Response status:", response.status);
 
         if (!response.ok) {
-            console.error("Gemini API Error:", data);
+            console.error("OpenRouter Error:", data);
             return NextResponse.json(
-                { error: data.error?.message || "Gemini API error" },
+                { error: data.error?.message || "OpenRouter API error" },
                 { status: response.status }
             );
         }
 
         // Extract text from response
-        const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        const responseText = data.choices?.[0]?.message?.content;
+        console.log("OpenRouter Response text:", responseText?.substring(0, 200));
 
         if (!responseText) {
             return NextResponse.json(
-                { error: "No response from Gemini" },
+                { error: "No response from OpenRouter" },
                 { status: 500 }
             );
         }
