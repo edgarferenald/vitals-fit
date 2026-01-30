@@ -30,7 +30,7 @@ export async function analyzeFoodImage(base64Image: string): Promise<FoodAnalysi
 
     try {
         const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
         // Clean base64 string if it contains metadata header
         const cleanBase64 = base64Image.replace(/^data:image\/[a-z]+;base64,/, "");
