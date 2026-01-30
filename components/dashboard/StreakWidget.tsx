@@ -15,13 +15,13 @@ export default function StreakWidget({ days = 0 }: StreakWidgetProps) {
                     <Zap className="w-6 h-6 text-neon-green fill-neon-green" />
                 </div>
                 <div className="flex flex-col">
-                    <span className="text-sm text-gray-400 uppercase tracking-widest font-bold">Streak</span>
-                    <span className="text-xs text-gray-500">Keep it up!</span>
+                    <span className="text-sm text-gray-400 uppercase tracking-widest font-bold">Серия</span>
+                    <span className="text-xs text-gray-500">Так держать!</span>
                 </div>
             </div>
 
             <div className="text-4xl font-black font-orbitron text-white text-glow">
-                {days} <span className="text-sm font-normal text-gray-400">Days</span>
+                {days} <span className="text-sm font-normal text-gray-400">Дней</span>
             </div>
         </GlassCard>
     );

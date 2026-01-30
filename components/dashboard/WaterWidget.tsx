@@ -23,7 +23,7 @@ export default function WaterWidget() {
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-neon-blue">
                     <Droplets className="w-6 h-6 animate-pulse" />
-                    <h3 className="text-lg font-bold uppercase tracking-wider">Hydration</h3>
+                    <h3 className="text-lg font-bold uppercase tracking-wider">Вода</h3>
                 </div>
                 <span className="text-2xl font-orbitron">{waterAmount} ml</span>
             </div>
@@ -31,7 +31,7 @@ export default function WaterWidget() {
             {/* Progress Bar */}
             <div className="relative pt-2">
                 <ProgressBar progress={percentage} color="blue" />
-                <div className="text-right text-xs text-gray-400 mt-1">Goal: {goal}ml</div>
+                <div className="text-right text-xs text-gray-400 mt-1">Цель: {goal}мл</div>
             </div>
 
             {/* Controls */}
@@ -41,7 +41,7 @@ export default function WaterWidget() {
                     fullWidth
                     className="flex items-center justify-center gap-2"
                 >
-                    <Plus className="w-4 h-4" /> Add 150ml
+                    <Plus className="w-4 h-4" /> Добавить 150мл
                 </NeonButton>
             </div>
 

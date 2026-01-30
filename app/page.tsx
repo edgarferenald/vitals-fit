@@ -14,7 +14,7 @@ export default function Home() {
             VITALS
             <span className="text-neon-green text-xs ml-1 align-top">V1.0</span>
           </h1>
-          <p className="text-xs text-gray-400">System Online • Bio-sync active</p>
+          <p className="text-xs text-gray-400">Система в сети • Био-синхронизация</p>
         </div>
         <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-neon-green via-neon-blue to-neon-pink p-[2px]">
           <div className="w-full h-full rounded-full bg-black flex items-center justify-center text-xs font-bold text-white">
@@ -38,8 +38,8 @@ export default function Home() {
       <section className="mt-4">
         <div className="p-4 rounded-2xl border border-neon-green/30 bg-neon-green/5 flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-white font-bold uppercase tracking-wider">Food Scanner</span>
-            <span className="text-xs text-neon-green">AI Analysis Ready</span>
+            <span className="text-white font-bold uppercase tracking-wider">Сканер Еды</span>
+            <span className="text-xs text-neon-green">AI Анализ Готов</span>
           </div>
           <FoodScanner />
         </div>

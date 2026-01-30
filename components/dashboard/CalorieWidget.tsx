@@ -18,16 +18,16 @@ export default function CalorieWidget({ calories = 0 }: CalorieWidgetProps) {
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-neon-pink">
                     <Flame className="w-6 h-6 animate-bounce" /> {/* Animate bounce for fire effect */}
-                    <h3 className="text-lg font-bold uppercase tracking-wider">Calories</h3>
+                    <h3 className="text-lg font-bold uppercase tracking-wider">Калории</h3>
                 </div>
-                <span className="text-2xl font-orbitron">{calories} kcal</span>
+                <span className="text-2xl font-orbitron">{calories} ккал</span>
             </div>
 
             <div className="relative pt-2">
                 <ProgressBar progress={percentage} color="pink" />
                 <div className="flex justify-between text-xs text-gray-400 mt-1">
-                    <span>Intake</span>
-                    <span>Goal: {goal}</span>
+                    <span>Потреблено</span>
+                    <span>Цель: {goal}</span>
                 </div>
             </div>
         </GlassCard>
