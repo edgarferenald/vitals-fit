@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export async function POST(request: NextRequest) {
     const API_KEY = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
-    console.log("Server API Key status:", API_KEY ? "Present" : "Missing");
+    console.log("Server API Key status:", API_KEY ? "Present (length: " + API_KEY.length + ")" : "Missing");
 
     if (!API_KEY) {
         return NextResponse.json(
@@ -23,44 +22,78 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
-
         // Clean base64 string if it contains metadata header
         const cleanBase64 = image.replace(/^data:image\/[a-z]+;base64,/, "");
 
-        const prompt = `
-      Проанализируй это изображение еды. Определи блюдо, оцени калории и разбей макронутриенты (белки, жиры, углеводы) в граммах.
-      Также дай очень краткий совет по рецепту или здоровью.
-      
-      ВАЖНО: Все текстовые поля (food_name и recipe_suggestion) должны быть на РУССКОМ языке!
-      
-      Верни результат ТОЛЬКО как валидный JSON объект со следующей структурой:
-      {
-        "food_name": "string на русском языке",
-        "calories": number,
-        "macros": {
-          "protein": number,
-          "fat": number,
-          "carbs": number
-        },
-        "recipe_suggestion": "string на русском языке"
-      }
-      Не включай форматирование markdown типа \`\`\`json или \`\`\`. Только чистая JSON строка.
-    `;
+        const prompt = `Проанализируй это изображение еды. Определи блюдо, оцени калории и разбей макронутриенты (белки, жиры, углеводы) в граммах.
+Также дай очень краткий совет по рецепту или здоровью.
 
-        const result = await model.generateContent([
-            prompt,
+ВАЖНО: Все текстовые поля (food_name и recipe_suggestion) должны быть на РУССКОМ языке!
+
+Верни результат ТОЛЬКО как валидный JSON объект со следующей структурой:
+{
+  "food_name": "название блюда на русском",
+  "calories": число,
+  "macros": {
+    "protein": число,
+    "fat": число,
+    "carbs": число
+  },
+  "recipe_suggestion": "совет на русском"
+}
+Не включай форматирование markdown. Только чистый JSON.`;
+
+        // Use REST API directly with v1 endpoint
+        const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
             {
-                inlineData: {
-                    data: cleanBase64,
-                    mimeType: "image/jpeg",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
                 },
-            },
-        ]);
+                body: JSON.stringify({
+                    contents: [
+                        {
+                            parts: [
+                                { text: prompt },
+                                {
+                                    inline_data: {
+                                        mime_type: "image/jpeg",
+                                        data: cleanBase64,
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                    generationConfig: {
+                        temperature: 0.4,
+                        maxOutputTokens: 1024,
+                    },
+                }),
+            }
+        );
 
-        const responseText = result.response.text();
-        console.log("Gemini Response:", responseText);
+        const data = await response.json();
+        console.log("Gemini API Response status:", response.status);
+        console.log("Gemini API Response:", JSON.stringify(data).substring(0, 500));
+
+        if (!response.ok) {
+            console.error("Gemini API Error:", data);
+            return NextResponse.json(
+                { error: data.error?.message || "Gemini API error" },
+                { status: response.status }
+            );
+        }
+
+        // Extract text from response
+        const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (!responseText) {
+            return NextResponse.json(
+                { error: "No response from Gemini" },
+                { status: 500 }
+            );
+        }
 
         // Sanitize response if needed (remove markdown)
         const sanitizedText = responseText
