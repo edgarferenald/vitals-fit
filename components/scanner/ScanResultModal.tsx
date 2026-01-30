@@ -59,22 +59,22 @@ export default function ScanResultModal({ isOpen, onClose, onSave, result, image
                     <div className="p-6 space-y-6">
                         {/* Calories */}
                         <div className="flex items-end justify-between border-b border-white/10 pb-4">
-                            <span className="text-gray-400 uppercase tracking-widest text-xs">Energy</span>
-                            <span className="text-3xl font-orbitron text-neon-green">{result.calories} <span className="text-sm font-sans text-gray-500">kcal</span></span>
+                            <span className="text-gray-400 uppercase tracking-widest text-xs">Энергия</span>
+                            <span className="text-3xl font-orbitron text-neon-green">{result.calories} <span className="text-sm font-sans text-gray-500">ккал</span></span>
                         </div>
 
                         {/* Macros Mesh */}
                         <div className="grid grid-cols-3 gap-2">
                             <div className="bg-white/5 rounded-lg p-3 text-center border border-white/5">
-                                <div className="text-xs text-gray-400 mb-1">Protein</div>
+                                <div className="text-xs text-gray-400 mb-1">Белки</div>
                                 <div className="font-bold text-neon-blue">{result.macros.protein}g</div>
                             </div>
                             <div className="bg-white/5 rounded-lg p-3 text-center border border-white/5">
-                                <div className="text-xs text-gray-400 mb-1">Fat</div>
+                                <div className="text-xs text-gray-400 mb-1">Жиры</div>
                                 <div className="font-bold text-neon-yellow">{result.macros.fat}g</div>
                             </div>
                             <div className="bg-white/5 rounded-lg p-3 text-center border border-white/5">
-                                <div className="text-xs text-gray-400 mb-1">Carbs</div>
+                                <div className="text-xs text-gray-400 mb-1">Углеводы</div>
                                 <div className="font-bold text-neon-pink">{result.macros.carbs}g</div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ export default function ScanResultModal({ isOpen, onClose, onSave, result, image
                         {/* Actions */}
                         <div className="pt-2">
                             <NeonButton fullWidth onClick={onSave} className="flex items-center justify-center gap-2">
-                                <Check size={18} /> Add to Diary
+                                <Check size={18} /> Добавить в дневник
                             </NeonButton>
                         </div>
                     </div>
