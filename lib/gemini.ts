@@ -1,13 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-
-if (!API_KEY) {
-    console.warn("Gemini API Key is missing. Check your .env.local file.");
-}
-
-const genAI = new GoogleGenerativeAI(API_KEY || "");
-
 export interface FoodAnalysisResult {
     food_name: string;
     calories: number;
@@ -21,38 +13,46 @@ export interface FoodAnalysisResult {
 }
 
 export async function analyzeFoodImage(base64Image: string): Promise<FoodAnalysisResult | null> {
+    const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+
+    console.log("API Key status:", API_KEY ? "Present" : "Missing");
+
     if (!API_KEY) {
         // Return mock data if no key is present for development/demo ease
         console.log("Returning mock data due to missing API Key");
         return new Promise((resolve) => setTimeout(() => resolve({
-            food_name: "Grilled Chicken Salad",
+            food_name: "Салат с курицей гриль",
             calories: 450,
             macros: { protein: 40, fat: 15, carbs: 10 },
-            recipe_suggestion: "Add some olive oil for healthy fats."
+            recipe_suggestion: "Добавьте оливковое масло для полезных жиров."
         }), 2000));
     }
 
     try {
+        const genAI = new GoogleGenerativeAI(API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         // Clean base64 string if it contains metadata header
         const cleanBase64 = base64Image.replace(/^data:image\/[a-z]+;base64,/, "");
 
         const prompt = `
-      Analyze this image of food. Identify the dish, estimate the calories, and breakdown macronutrients (protein, fat, carbs) in grams.
-      Also provide a very brief recipe suggestion or health tip.
-      Return the result ONLY as a valid JSON object with the following structure:
+      Проанализируй это изображение еды. Определи блюдо, оцени калории и разбей макронутриенты (белки, жиры, углеводы) в граммах.
+      Также дай очень краткий совет по рецепту или здоровью.
+      
+      ВАЖНО: Все текстовые поля (food_name и recipe_suggestion) должны быть на РУССКОМ языке!
+      
+      Верни результат ТОЛЬКО как валидный JSON объект со следующей структурой:
       {
-        "food_name": "string",
+        "food_name": "string на русском языке",
         "calories": number,
         "macros": {
           "protein": number,
           "fat": number,
           "carbs": number
         },
-        "recipe_suggestion": "string"
+        "recipe_suggestion": "string на русском языке"
       }
-      Do not include markdown formatting like \`\`\`json or \`\`\`. Just the raw JSON string.
+      Не включай форматирование markdown типа \`\`\`json или \`\`\`. Только чистая JSON строка.
     `;
 
         const result = await model.generateContent([
