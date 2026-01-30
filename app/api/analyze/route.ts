@@ -43,9 +43,9 @@ export async function POST(request: NextRequest) {
 }
 Не включай форматирование markdown. Только чистый JSON.`;
 
-        // Use REST API directly with v1 endpoint
+        // Use REST API directly with v1beta endpoint and gemini-pro-vision
         const response = await fetch(
-            `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=${API_KEY}`,
             {
                 method: "POST",
                 headers: {
