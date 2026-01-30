@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export async function POST(request: NextRequest) {
-    const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    const API_KEY = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+
+    console.log("Server API Key status:", API_KEY ? "Present" : "Missing");
 
     if (!API_KEY) {
         return NextResponse.json(
