@@ -3,27 +3,36 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-// Create a lazy-initialized client to avoid build-time errors
-let _supabase: SupabaseClient | null = null;
+// Singleton pattern - create client once
+let supabaseInstance: SupabaseClient | null = null;
 
-export const getSupabase = (): SupabaseClient => {
-    if (!_supabase) {
-        if (!supabaseUrl || !supabaseKey) {
-            console.warn("Supabase URL or Anon Key is missing. Check your .env.local file.");
-            // Return a dummy client for build time - it won't be used for actual operations
-            return createClient('https://placeholder.supabase.co', 'placeholder');
+function getSupabaseClient(): SupabaseClient {
+    if (supabaseInstance) {
+        return supabaseInstance;
+    }
+
+    // During SSR/build, use placeholder if env vars missing
+    if (!supabaseUrl || !supabaseKey) {
+        if (typeof window !== 'undefined') {
+            console.error("Supabase URL or Anon Key is missing!");
         }
-        _supabase = createClient(supabaseUrl, supabaseKey);
+        return createClient('https://placeholder.supabase.co', 'placeholder-key');
     }
-    return _supabase;
-};
 
-// For backwards compatibility - lazy getter
-export const supabase = {
-    get from() {
-        return getSupabase().from.bind(getSupabase());
-    },
-    get auth() {
-        return getSupabase().auth;
-    }
-};
+    supabaseInstance = createClient(supabaseUrl, supabaseKey, {
+        auth: {
+            persistSession: true,
+            storageKey: 'vitals-auth',
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+        }
+    });
+
+    return supabaseInstance;
+}
+
+// Export the client getter
+export const supabase = getSupabaseClient();
+
+// For cases where we need a fresh reference
+export const getSupabase = getSupabaseClient;
