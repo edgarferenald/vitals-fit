@@ -7,18 +7,20 @@ import { useAuth } from "@/lib/AuthContext";
 import AuthForm from "@/components/auth/AuthForm";
 import GlassCard from "@/components/ui/GlassCard";
 import GoalModal from "@/components/ui/GoalModal";
-import { ArrowLeft, User, Droplets, Flame, LogOut, Trash2 } from "lucide-react";
+import { ArrowLeft, User, Droplets, Flame, LogOut, Trash2, Edit2, Check } from "lucide-react";
 import Link from "next/link";
 import { updateWaterGoal } from "@/lib/waterService";
 import { updateCalorieGoal } from "@/lib/foodService";
 import { getStreakHistory, deleteStreak } from "@/lib/streakService";
 
 export default function SettingsPage() {
-    const { user, profile, signOut, refreshProfile } = useAuth();
+    const { user, profile, signOut, refreshProfile, updateProfile } = useAuth();
     const [showWaterGoal, setShowWaterGoal] = useState(false);
     const [showCalorieGoal, setShowCalorieGoal] = useState(false);
     const [streakHistory, setStreakHistory] = useState<any[]>([]);
     const [showStreaks, setShowStreaks] = useState(false);
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [newName, setNewName] = useState("");
 
     const handleWaterGoalSave = async (goal: number) => {
         if (!user) return;
@@ -42,6 +44,17 @@ export default function SettingsPage() {
     const handleDeleteStreak = async (id: string) => {
         await deleteStreak(id);
         loadStreakHistory();
+    };
+
+    const handleEditName = () => {
+        setNewName(profile?.display_name || "");
+        setIsEditingName(true);
+    };
+
+    const handleSaveName = async () => {
+        if (!user) return;
+        await updateProfile({ display_name: newName.trim() || null });
+        setIsEditingName(false);
     };
 
     if (!user) {
@@ -77,7 +90,34 @@ export default function SettingsPage() {
                     </div>
                 </div>
                 <div className="flex-1">
-                    <h2 className="font-bold text-white">{profile?.display_name || "Пользователь"}</h2>
+                    {isEditingName ? (
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="text"
+                                value={newName}
+                                onChange={(e) => setNewName(e.target.value)}
+                                placeholder="Введите имя"
+                                className="flex-1 px-3 py-1 rounded-lg bg-black/50 border border-neon-green/30 text-white focus:outline-none focus:border-neon-green"
+                                autoFocus
+                            />
+                            <button
+                                onClick={handleSaveName}
+                                className="p-2 text-neon-green hover:bg-neon-green/10 rounded-lg transition-colors"
+                            >
+                                <Check className="w-5 h-5" />
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-2">
+                            <h2 className="font-bold text-white">{profile?.display_name || "Пользователь"}</h2>
+                            <button
+                                onClick={handleEditName}
+                                className="p-1 text-gray-500 hover:text-neon-green transition-colors"
+                            >
+                                <Edit2 className="w-4 h-4" />
+                            </button>
+                        </div>
+                    )}
                     <p className="text-sm text-gray-400">{user.email}</p>
                 </div>
             </GlassCard>

@@ -1,9 +1,21 @@
+"use client";
+
 import CalorieWidget from "@/components/dashboard/CalorieWidget";
 import StreakWidget from "@/components/dashboard/StreakWidget";
 import WaterWidget from "@/components/dashboard/WaterWidget";
 import FoodScanner from "@/components/scanner/FoodScanner";
+import { useAuth } from "@/lib/AuthContext";
+import Link from "next/link";
 
 export default function Home() {
+  const { user, profile } = useAuth();
+
+  // Get display name or first letter of email or default
+  const displayName = profile?.display_name || user?.email?.split('@')[0] || "USER";
+  const avatarText = profile?.display_name
+    ? profile.display_name.charAt(0).toUpperCase()
+    : user?.email?.charAt(0).toUpperCase() || "U";
+
   return (
     <div className="flex flex-col gap-3 p-3 sm:p-6 lg:p-8 min-h-screen max-h-screen overflow-hidden">
       {/* Header - Compact */}
@@ -15,11 +27,16 @@ export default function Home() {
           </h1>
           <p className="text-[10px] sm:text-sm text-gray-400">Система в сети • Био-синхронизация</p>
         </div>
-        <div className="w-8 h-8 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-gradient-to-tr from-neon-green via-neon-blue to-neon-pink p-[2px]">
-          <div className="w-full h-full rounded-full bg-black flex items-center justify-center text-[10px] sm:text-sm font-bold text-white">
-            USER
+        <Link href="/settings" className="group">
+          <div className="w-8 h-8 sm:w-12 sm:h-12 lg:w-14 lg:h-14 rounded-full bg-gradient-to-tr from-neon-green via-neon-blue to-neon-pink p-[2px] group-hover:shadow-[0_0_15px_rgba(0,255,148,0.5)] transition-shadow">
+            <div className="w-full h-full rounded-full bg-black flex items-center justify-center text-[10px] sm:text-sm font-bold text-white">
+              {avatarText}
+            </div>
           </div>
-        </div>
+          <p className="text-[8px] sm:text-[10px] text-center text-gray-500 mt-0.5 truncate max-w-[60px] sm:max-w-[80px]">
+            {displayName}
+          </p>
+        </Link>
       </header>
 
       {/* Main Dashboard - Mobile: Single column compact, Desktop: 3-column */}
