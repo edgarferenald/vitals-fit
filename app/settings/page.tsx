@@ -7,7 +7,8 @@ import { useAuth } from "@/lib/AuthContext";
 import AuthForm from "@/components/auth/AuthForm";
 import GlassCard from "@/components/ui/GlassCard";
 import GoalModal from "@/components/ui/GoalModal";
-import { ArrowLeft, User, Droplets, Flame, LogOut, Trash2, Edit2, Check } from "lucide-react";
+import TopNav from "@/components/ui/TopNav";
+import { User, Droplets, Flame, LogOut, Trash2, Edit2, Check } from "lucide-react";
 import Link from "next/link";
 import { updateWaterGoal } from "@/lib/waterService";
 import { updateCalorieGoal } from "@/lib/foodService";
@@ -21,6 +22,10 @@ export default function SettingsPage() {
     const [showStreaks, setShowStreaks] = useState(false);
     const [isEditingName, setIsEditingName] = useState(false);
     const [newName, setNewName] = useState("");
+
+    const avatarText = profile?.display_name
+        ? profile.display_name.charAt(0).toUpperCase()
+        : user?.email?.charAt(0).toUpperCase() || "U";
 
     const handleWaterGoalSave = async (goal: number) => {
         if (!user) return;
@@ -59,12 +64,19 @@ export default function SettingsPage() {
 
     if (!user) {
         return (
-            <div className="flex flex-col gap-4 p-4 min-h-screen pb-20">
-                <header className="flex items-center gap-4">
-                    <Link href="/" className="p-2 rounded-lg bg-black/50 border border-neon-green/30">
-                        <ArrowLeft className="w-5 h-5 text-neon-green" />
-                    </Link>
-                    <h1 className="text-xl font-bold text-white">Настройки</h1>
+            <div className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen">
+                <header className="flex items-center justify-between gap-2">
+                    <div className="flex-shrink-0">
+                        <h1 className="text-lg sm:text-2xl font-bold text-white tracking-widest">
+                            VITALS<span className="text-neon-green text-[8px] sm:text-xs ml-0.5 align-top">v1</span>
+                        </h1>
+                    </div>
+                    <TopNav />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-neon-green via-neon-blue to-neon-pink p-[1.5px]">
+                        <div className="w-full h-full rounded-full bg-black flex items-center justify-center text-[10px] sm:text-xs font-bold text-white">
+                            U
+                        </div>
+                    </div>
                 </header>
                 <div className="flex-1 flex items-center justify-center">
                     <AuthForm />
@@ -74,12 +86,22 @@ export default function SettingsPage() {
     }
 
     return (
-        <div className="flex flex-col gap-4 p-4 min-h-screen pb-20">
-            <header className="flex items-center gap-4">
-                <Link href="/" className="p-2 rounded-lg bg-black/50 border border-neon-green/30">
-                    <ArrowLeft className="w-5 h-5 text-neon-green" />
+        <div className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen">
+            {/* Header with Navigation */}
+            <header className="flex items-center justify-between gap-2">
+                <div className="flex-shrink-0">
+                    <h1 className="text-lg sm:text-2xl font-bold text-white tracking-widest">
+                        VITALS<span className="text-neon-green text-[8px] sm:text-xs ml-0.5 align-top">v1</span>
+                    </h1>
+                </div>
+                <TopNav />
+                <Link href="/settings" className="flex-shrink-0">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-neon-green via-neon-blue to-neon-pink p-[1.5px]">
+                        <div className="w-full h-full rounded-full bg-black flex items-center justify-center text-[10px] sm:text-xs font-bold text-white">
+                            {avatarText}
+                        </div>
+                    </div>
                 </Link>
-                <h1 className="text-xl font-bold text-white">Настройки</h1>
             </header>
 
             {/* Profile Card */}
@@ -123,7 +145,7 @@ export default function SettingsPage() {
             </GlassCard>
 
             {/* Goals Section */}
-            <h2 className="text-sm text-gray-400 uppercase tracking-wider mt-4">Цели</h2>
+            <h2 className="text-sm text-gray-400 uppercase tracking-wider mt-2">Цели</h2>
 
             <button onClick={() => setShowWaterGoal(true)}>
                 <GlassCard className="flex items-center gap-4 p-4 hover:border-neon-blue/50 transition-colors">
@@ -148,7 +170,7 @@ export default function SettingsPage() {
             </button>
 
             {/* Streak History */}
-            <h2 className="text-sm text-gray-400 uppercase tracking-wider mt-4">Серии</h2>
+            <h2 className="text-sm text-gray-400 uppercase tracking-wider mt-2">Серии</h2>
 
             <button onClick={loadStreakHistory}>
                 <GlassCard className="flex items-center gap-4 p-4 hover:border-neon-green/50 transition-colors">
@@ -188,7 +210,7 @@ export default function SettingsPage() {
             {/* Logout */}
             <button
                 onClick={signOut}
-                className="mt-auto py-3 rounded-lg border border-red-500/30 text-red-400 flex items-center justify-center gap-2 hover:bg-red-500/10 transition-colors"
+                className="mt-4 py-3 rounded-lg border border-red-500/30 text-red-400 flex items-center justify-center gap-2 hover:bg-red-500/10 transition-colors"
             >
                 <LogOut className="w-5 h-5" />
                 Выйти
