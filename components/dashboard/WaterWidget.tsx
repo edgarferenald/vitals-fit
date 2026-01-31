@@ -97,13 +97,13 @@ export default function WaterWidget() {
                 </div>
 
                 <div className="flex gap-2">
-                    <NeonButton
+                    <button
                         onClick={handleRemoveWater}
                         disabled={loading || waterAmount < 150}
-                        className="flex-1 flex items-center justify-center gap-1 text-xs sm:text-sm py-1.5 sm:py-2 opacity-70"
+                        className="flex-1 flex items-center justify-center py-1.5 sm:py-2 rounded-lg border border-yellow-500/50 bg-yellow-500/10 text-yellow-400 hover:bg-yellow-500/20 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                     >
                         <Minus className="w-3 h-3 sm:w-4 sm:h-4" />
-                    </NeonButton>
+                    </button>
                     <NeonButton
                         onClick={handleAddWater}
                         disabled={loading}
