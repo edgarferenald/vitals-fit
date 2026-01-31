@@ -27,13 +27,13 @@ export default function Home() {
 
         {/* Streak Widget - Compact on mobile */}
         <section className="lg:col-span-1">
-          <StreakWidget days={12} />
+          <StreakWidget />
         </section>
 
         {/* Water & Calories - Side by side on mobile */}
         <section className="lg:col-span-1 grid grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-4">
           <WaterWidget />
-          <CalorieWidget calories={1250} />
+          <CalorieWidget />
         </section>
 
         {/* Food Scanner - Compact */}

@@ -6,8 +6,11 @@ import NeonButton from "../ui/NeonButton";
 import { compressImage } from "@/utils/imageUtils";
 import { analyzeFoodImage, FoodAnalysisResult } from "@/lib/gemini";
 import ScanResultModal from "./ScanResultModal";
+import { useAuth } from "@/lib/AuthContext";
+import { addFoodEntry } from "@/lib/foodService";
 
 export default function FoodScanner() {
+    const { user } = useAuth();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [result, setResult] = useState<FoodAnalysisResult | null>(null);
@@ -24,24 +27,35 @@ export default function FoodScanner() {
             const compressedBase64 = await compressImage(file);
             setImageSrc(compressedBase64);
 
-            // 2. Send to Gemini
+            // 2. Send to AI
             const analysis = await analyzeFoodImage(compressedBase64);
             setResult(analysis);
 
         } catch (error) {
             console.error("Scanning failed:", error);
-            alert("Failed to analyze image. Please try again.");
+            alert("Не удалось распознать. Попробуйте снова.");
         } finally {
             setIsAnalyzing(false);
-            // Reset input layout
             if (fileInputRef.current) fileInputRef.current.value = "";
         }
     };
 
-    const handleSave = () => {
-        // In real app: save to Supabase
-        console.log("Saving entry:", result);
-        // Be sure to close after save
+    const handleSave = async () => {
+        if (!result) return;
+
+        // Save to database if logged in
+        if (user) {
+            await addFoodEntry(user.id, {
+                food_name: result.food_name,
+                calories: result.calories,
+                protein: result.macros.protein,
+                fat: result.macros.fat,
+                carbs: result.macros.carbs,
+                recipe_suggestion: result.recipe_suggestion
+            });
+        }
+
+        // Close modal
         setResult(null);
         setImageSrc(null);
     };
@@ -56,13 +70,12 @@ export default function FoodScanner() {
             <input
                 type="file"
                 accept="image/*"
-                capture="environment" // Triggers camera on mobile
+                capture="environment"
                 className="hidden"
                 ref={fileInputRef}
                 onChange={handleFileSelect}
             />
 
-            {/* Trigger Button (Using the styled layout from Dashboard, or making this the wrapper) */}
             <div className="relative">
                 {isAnalyzing && (
                     <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/50 rounded-full">
@@ -79,7 +92,6 @@ export default function FoodScanner() {
                 </NeonButton>
             </div>
 
-            {/* Result Modal */}
             <ScanResultModal
                 isOpen={!!result}
                 onClose={handleClose}
