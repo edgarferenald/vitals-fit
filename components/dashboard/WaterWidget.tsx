@@ -4,49 +4,40 @@ import { useState } from "react";
 import GlassCard from "../ui/GlassCard";
 import NeonButton from "../ui/NeonButton";
 import { Droplets, Plus } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import ProgressBar from "../ui/ProgressBar";
 
 export default function WaterWidget() {
     const [waterAmount, setWaterAmount] = useState(0);
-    const goal = 2000; // 2000ml goal
+    const goal = 2000;
 
     const addWater = () => {
-        // In real implementation, this would save to Supabase
         setWaterAmount((prev) => prev + 150);
     };
 
     const percentage = Math.min((waterAmount / goal) * 100, 100);
 
     return (
-        <GlassCard className="flex-1 flex flex-col gap-4">
+        <GlassCard className="flex-1 flex flex-col gap-1.5 sm:gap-3 p-3 sm:p-4">
             <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 lg:gap-3 text-neon-blue">
-                    <Droplets className="w-6 h-6 lg:w-8 lg:h-8 animate-pulse" />
-                    <h3 className="text-lg lg:text-xl font-bold uppercase tracking-wider">Вода</h3>
+                <div className="flex items-center gap-1.5 sm:gap-2 text-neon-blue">
+                    <Droplets className="w-4 h-4 sm:w-6 sm:h-6 animate-pulse" />
+                    <h3 className="text-sm sm:text-lg font-bold uppercase tracking-wider">Вода</h3>
                 </div>
-                <span className="text-2xl lg:text-3xl font-orbitron">{waterAmount} мл</span>
+                <span className="text-lg sm:text-2xl font-orbitron">{waterAmount}<span className="text-xs sm:text-sm ml-0.5">мл</span></span>
             </div>
 
-            {/* Progress Bar */}
-            <div className="relative pt-2">
+            <div className="relative">
                 <ProgressBar progress={percentage} color="blue" />
-                <div className="text-right text-xs text-gray-400 mt-1">Цель: {goal}мл</div>
+                <div className="text-right text-[10px] sm:text-xs text-gray-400 mt-0.5">Цель: {goal}мл</div>
             </div>
 
-            {/* Controls */}
-            <div className="mt-2">
-                <NeonButton
-                    onClick={addWater}
-                    fullWidth
-                    className="flex items-center justify-center gap-2"
-                >
-                    <Plus className="w-4 h-4" /> Добавить 150мл
-                </NeonButton>
-            </div>
-
-            {/* Floating +150ml Animation (Conceptual) */}
-            {/* We could add an AnimatePresence here for floating text when button is clicked */}
+            <NeonButton
+                onClick={addWater}
+                fullWidth
+                className="flex items-center justify-center gap-1 text-xs sm:text-sm py-1.5 sm:py-2"
+            >
+                <Plus className="w-3 h-3 sm:w-4 sm:h-4" /> +150мл
+            </NeonButton>
         </GlassCard>
     );
 }
