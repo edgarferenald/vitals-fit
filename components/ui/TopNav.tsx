@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Clock, User } from "lucide-react";
+import { Home, Clock, User, BookOpen } from "lucide-react";
 
 const navItems = [
     { href: "/", icon: Home, label: "Главная", width: "w-[90px] sm:w-[100px]" },
+    { href: "/recommendations", icon: BookOpen, label: "Советы", width: "w-[85px] sm:w-[95px]" },
     { href: "/history", icon: Clock, label: "История", width: "w-[85px] sm:w-[95px]" },
     { href: "/settings", icon: User, label: "Профиль", width: "w-[85px] sm:w-[95px]" },
 ];
