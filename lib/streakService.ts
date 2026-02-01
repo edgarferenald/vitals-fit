@@ -7,6 +7,7 @@ interface Streak {
     end_date: string | null;
     is_active: boolean;
     days_count: number;
+    last_check_date?: string;
 }
 
 // Get active streak for user
@@ -21,6 +22,8 @@ export async function getActiveStreak(userId: string): Promise<Streak | null> {
         .single();
 
     if (error) {
+        // No active streak is not an error
+        if (error.code === "PGRST116") return null;
         console.error("Error fetching streak:", error);
         return null;
     }
@@ -59,30 +62,33 @@ export async function startNewStreak(userId: string): Promise<Streak | null> {
     return data as Streak;
 }
 
-// Increment streak days (call on daily login)
-export async function incrementStreak(userId: string): Promise<number> {
+// Check and update streak on daily login
+// Returns the current days count
+export async function checkDailyStreak(userId: string): Promise<number> {
     const streak = await getActiveStreak(userId);
 
+    // No active streak - return 0
     if (!streak) {
-        const newStreak = await startNewStreak(userId);
-        return newStreak?.days_count ?? 0;
+        return 0;
     }
 
     const today = new Date().toISOString().split("T")[0];
     const startDate = new Date(streak.start_date);
     const todayDate = new Date(today);
 
-    // Calculate days since start
-    const diffTime = Math.abs(todayDate.getTime() - startDate.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    // Calculate total days since start (inclusive)
+    const diffTime = todayDate.getTime() - startDate.getTime();
+    const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
-    // Update streak
-    await supabase
-        .from("streaks")
-        .update({ days_count: diffDays })
-        .eq("id", streak.id);
+    // Only update if days changed
+    if (totalDays !== streak.days_count) {
+        await supabase
+            .from("streaks")
+            .update({ days_count: totalDays })
+            .eq("id", streak.id);
+    }
 
-    return diffDays;
+    return totalDays;
 }
 
 // Get all streaks for history

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import GlassCard from "../ui/GlassCard";
 import { Zap, RefreshCw } from "lucide-react";
 import { useAuth } from "@/lib/AuthContext";
-import { getActiveStreak, startNewStreak } from "@/lib/streakService";
+import { checkDailyStreak, startNewStreak } from "@/lib/streakService";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function StreakWidget() {
@@ -15,14 +15,15 @@ export default function StreakWidget() {
 
     useEffect(() => {
         if (user) {
-            loadStreak();
+            loadAndUpdateStreak();
         }
     }, [user]);
 
-    const loadStreak = async () => {
+    const loadAndUpdateStreak = async () => {
         if (!user) return;
-        const streak = await getActiveStreak(user.id);
-        setDays(streak?.days_count ?? 0);
+        // This will automatically update days count based on start_date
+        const currentDays = await checkDailyStreak(user.id);
+        setDays(currentDays);
     };
 
     const handleNewStreak = async () => {
@@ -70,7 +71,9 @@ export default function StreakWidget() {
                     </button>
                     <div className="flex flex-col">
                         <span className="text-xs sm:text-sm lg:text-lg text-gray-400 uppercase tracking-widest font-bold">Серия</span>
-                        <span className="text-[10px] sm:text-xs lg:text-sm text-gray-500">Так держать!</span>
+                        <span className="text-[10px] sm:text-xs lg:text-sm text-neon-green">
+                            {days > 0 ? "Так держать!" : "Начните серию!"}
+                        </span>
                     </div>
                 </div>
 
@@ -96,9 +99,14 @@ export default function StreakWidget() {
                             className="w-full max-w-sm p-6 rounded-2xl bg-black/90 border border-neon-green/30"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <h3 className="text-xl font-bold text-white mb-2">Начать новую серию?</h3>
+                            <h3 className="text-xl font-bold text-white mb-2">
+                                {days > 0 ? "Начать новую серию?" : "Начать серию?"}
+                            </h3>
                             <p className="text-gray-400 mb-4">
-                                Текущая серия ({days} дней) будет завершена и начнётся новая с 1 дня.
+                                {days > 0
+                                    ? `Текущая серия (${days} дней) будет завершена и начнётся новая с 1 дня.`
+                                    : "Серия будет увеличиваться каждый день!"
+                                }
                             </p>
                             <div className="flex gap-3">
                                 <button
