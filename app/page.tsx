@@ -18,7 +18,7 @@ export default function Home() {
     : user?.email?.charAt(0).toUpperCase() || "U";
 
   return (
-    <div className="flex flex-col gap-3 p-3 sm:p-6 lg:p-8 min-h-screen max-h-screen overflow-hidden">
+    <div className="flex flex-col gap-3 p-3 sm:p-6 lg:p-8 min-h-screen overflow-auto pb-6">
       {/* Header with Navigation */}
       <header className="flex items-center justify-between gap-2">
         {/* Logo */}
@@ -45,23 +45,27 @@ export default function Home() {
       {/* Status Line */}
       <p className="text-[9px] sm:text-xs text-gray-500 -mt-2">Система в сети • {displayName}</p>
 
-      {/* Main Dashboard */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6 overflow-hidden">
+      {/* Main Dashboard - Vertical Stack on Mobile */}
+      <div className="flex flex-col lg:grid lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
 
-        {/* Streak Widget */}
+        {/* Streak Widget - Full Width */}
         <section className="lg:col-span-1">
           <StreakWidget />
         </section>
 
-        {/* Water & Calories - Side by side on mobile */}
-        <section className="lg:col-span-1 grid grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-4">
+        {/* Water Widget - Full Width */}
+        <section className="lg:col-span-1">
           <WaterWidget />
+        </section>
+
+        {/* Calories Widget - Full Width */}
+        <section className="lg:col-span-1">
           <CalorieWidget />
         </section>
 
-        {/* Food Scanner */}
-        <section className="lg:col-span-1">
-          <div className="h-full p-3 sm:p-6 rounded-xl sm:rounded-2xl border border-neon-green/30 bg-neon-green/5 flex flex-col items-center justify-center gap-2 sm:gap-4">
+        {/* Food Scanner - Full Width */}
+        <section className="lg:col-span-3">
+          <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-neon-green/30 bg-neon-green/5 flex flex-col items-center justify-center gap-3 sm:gap-4">
             <div className="text-center">
               <span className="block text-base sm:text-2xl text-white font-bold uppercase tracking-wider">Сканер Еды</span>
               <span className="text-xs sm:text-sm text-neon-green">AI Анализ Готов</span>
