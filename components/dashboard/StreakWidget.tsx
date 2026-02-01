@@ -21,7 +21,6 @@ export default function StreakWidget() {
 
     const loadAndUpdateStreak = async () => {
         if (!user) return;
-        // This will automatically update days count based on start_date
         const currentDays = await checkDailyStreak(user.id);
         setDays(currentDays);
     };
@@ -57,6 +56,30 @@ export default function StreakWidget() {
         );
     }
 
+    // No active streak - show prominent "Start" button
+    if (days === 0) {
+        return (
+            <GlassCard className="h-full flex flex-row items-center justify-between bg-gradient-to-r from-neon-green/5 to-transparent py-3 px-4 sm:py-4 sm:px-6">
+                <div className="flex items-center gap-2 sm:gap-4">
+                    <div className="p-1.5 sm:p-3 bg-neon-green/10 rounded-full border border-neon-green/30">
+                        <Zap className="w-4 h-4 sm:w-6 sm:h-6 lg:w-8 lg:h-8 text-neon-green fill-neon-green" />
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-xs sm:text-sm lg:text-lg text-gray-400 uppercase tracking-widest font-bold">Серия</span>
+                        <span className="text-[10px] sm:text-xs lg:text-sm text-gray-500">Нет активной серии</span>
+                    </div>
+                </div>
+                <button
+                    onClick={handleNewStreak}
+                    disabled={loading}
+                    className="px-4 sm:px-6 py-2 sm:py-3 rounded-xl bg-neon-green text-black font-bold text-sm sm:text-base uppercase tracking-wider hover:bg-neon-green/80 transition-all shadow-[0_0_20px_rgba(0,255,148,0.4)] hover:shadow-[0_0_30px_rgba(0,255,148,0.6)] disabled:opacity-50"
+                >
+                    {loading ? "..." : "Начать"}
+                </button>
+            </GlassCard>
+        );
+    }
+
     return (
         <>
             <GlassCard className="h-full flex flex-row items-center justify-between bg-gradient-to-r from-neon-green/5 to-transparent py-3 px-4 sm:py-4 sm:px-6">
@@ -71,9 +94,7 @@ export default function StreakWidget() {
                     </button>
                     <div className="flex flex-col">
                         <span className="text-xs sm:text-sm lg:text-lg text-gray-400 uppercase tracking-widest font-bold">Серия</span>
-                        <span className="text-[10px] sm:text-xs lg:text-sm text-neon-green">
-                            {days > 0 ? "Так держать!" : "Начните серию!"}
-                        </span>
+                        <span className="text-[10px] sm:text-xs lg:text-sm text-neon-green">Так держать!</span>
                     </div>
                 </div>
 
@@ -99,14 +120,9 @@ export default function StreakWidget() {
                             className="w-full max-w-sm p-6 rounded-2xl bg-black/90 border border-neon-green/30"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <h3 className="text-xl font-bold text-white mb-2">
-                                {days > 0 ? "Начать новую серию?" : "Начать серию?"}
-                            </h3>
+                            <h3 className="text-xl font-bold text-white mb-2">Начать новую серию?</h3>
                             <p className="text-gray-400 mb-4">
-                                {days > 0
-                                    ? `Текущая серия (${days} дней) будет завершена и начнётся новая с 1 дня.`
-                                    : "Серия будет увеличиваться каждый день!"
-                                }
+                                Текущая серия ({days} дней) будет завершена и начнётся новая с 1 дня.
                             </p>
                             <div className="flex gap-3">
                                 <button
