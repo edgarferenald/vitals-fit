@@ -8,7 +8,7 @@ import Header from "@/components/ui/Header";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-3 p-3 sm:p-6 lg:p-8 min-h-screen overflow-auto pb-6">
+    <div className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen overflow-auto pb-6">
       <Header />
 
       {/* Main Dashboard - Equal Height Widgets */}
