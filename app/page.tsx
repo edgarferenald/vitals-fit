@@ -45,34 +45,24 @@ export default function Home() {
       {/* Status Line */}
       <p className="text-[9px] sm:text-xs text-gray-500 -mt-2">Система в сети • {displayName}</p>
 
-      {/* Main Dashboard - Vertical Stack on Mobile */}
-      <div className="flex flex-col lg:grid lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
+      {/* Main Dashboard - Equal Height Widgets */}
+      <div className="flex flex-col gap-3 sm:gap-4 lg:gap-6">
 
-        {/* Streak Widget - Full Width */}
-        <section className="lg:col-span-1">
+        {/* Top 3 Widgets - Equal Height */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 auto-rows-fr">
           <StreakWidget />
-        </section>
-
-        {/* Water Widget - Full Width */}
-        <section className="lg:col-span-1">
           <WaterWidget />
-        </section>
-
-        {/* Calories Widget - Full Width */}
-        <section className="lg:col-span-1">
           <CalorieWidget />
-        </section>
+        </div>
 
         {/* Food Scanner - Full Width */}
-        <section className="lg:col-span-3">
-          <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-neon-green/30 bg-neon-green/5 flex flex-col items-center justify-center gap-3 sm:gap-4">
-            <div className="text-center">
-              <span className="block text-base sm:text-2xl text-white font-bold uppercase tracking-wider">Сканер Еды</span>
-              <span className="text-xs sm:text-sm text-neon-green">AI Анализ Готов</span>
-            </div>
-            <FoodScanner />
+        <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-neon-green/30 bg-neon-green/5 flex flex-col items-center justify-center gap-3 sm:gap-4">
+          <div className="text-center">
+            <span className="block text-base sm:text-2xl text-white font-bold uppercase tracking-wider">Сканер Еды</span>
+            <span className="text-xs sm:text-sm text-neon-green">AI Анализ Готов</span>
           </div>
-        </section>
+          <FoodScanner />
+        </div>
       </div>
 
       {/* Decorative Background */}
