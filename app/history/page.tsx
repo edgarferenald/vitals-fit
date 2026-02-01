@@ -6,19 +6,14 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { getFoodHistory, deleteFoodEntry, FoodEntry } from "@/lib/foodService";
 import GlassCard from "@/components/ui/GlassCard";
-import TopNav from "@/components/ui/TopNav";
+import Header from "@/components/ui/Header";
 import { Trash2, Utensils } from "lucide-react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function HistoryPage() {
-    const { user, profile } = useAuth();
+    const { user } = useAuth();
     const [entries, setEntries] = useState<FoodEntry[]>([]);
     const [loading, setLoading] = useState(true);
-
-    const avatarText = profile?.display_name
-        ? profile.display_name.charAt(0).toUpperCase()
-        : user?.email?.charAt(0).toUpperCase() || "U";
 
     useEffect(() => {
         if (user) {
@@ -69,22 +64,7 @@ export default function HistoryPage() {
 
     return (
         <div className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen">
-            {/* Header with Navigation */}
-            <header className="flex items-center justify-between gap-2">
-                <div className="flex-shrink-0">
-                    <h1 className="text-lg sm:text-2xl font-bold text-white tracking-widest">
-                        VITALS<span className="text-neon-green text-[8px] sm:text-xs ml-0.5 align-top">v1</span>
-                    </h1>
-                </div>
-                <TopNav />
-                <Link href="/settings" className="flex-shrink-0">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-tr from-neon-green via-neon-blue to-neon-pink p-[1.5px]">
-                        <div className="w-full h-full rounded-full bg-black flex items-center justify-center text-[10px] sm:text-xs font-bold text-white">
-                            {avatarText}
-                        </div>
-                    </div>
-                </Link>
-            </header>
+            <Header />
 
             <h2 className="text-lg font-bold text-white">История еды</h2>
 

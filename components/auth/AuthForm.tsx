@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
 import { motion } from "framer-motion";
 
 export default function AuthForm() {
+    const router = useRouter();
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -24,6 +26,9 @@ export default function AuthForm() {
 
         if (error) {
             setError(error.message);
+        } else {
+            // Redirect to home after successful login/registration
+            router.push("/");
         }
 
         setLoading(false);
