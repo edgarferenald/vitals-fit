@@ -15,7 +15,7 @@ export default function TopNav() {
     const pathname = usePathname();
 
     return (
-        <nav className="flex items-center gap-0.5 sm:gap-1">
+        <nav className="hidden sm:flex items-center gap-1">
             {navItems.map((item) => {
                 const isActive = pathname === item.href;
                 const Icon = item.icon;

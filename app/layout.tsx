@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Orbitron } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/AuthContext";
+import BottomNav from "@/components/ui/BottomNav";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const orbitron = Orbitron({ subsets: ["latin"], variable: "--font-orbitron" });
@@ -23,9 +24,12 @@ export default function RootLayout({
         className={`${inter.variable} ${orbitron.variable} antialiased cyber-bg min-h-screen text-white`}
       >
         <AuthProvider>
-          <main className="relative z-10 w-full max-w-7xl mx-auto min-h-screen flex flex-col px-4 sm:px-6 lg:px-8">
-            {children}
-          </main>
+          <div className="relative z-10 flex flex-col min-h-[100dvh]">
+            <main className="flex-1 w-full max-w-7xl mx-auto flex flex-col px-4 sm:px-6 lg:px-8 pb-20 sm:pb-0">
+              {children}
+            </main>
+            <BottomNav />
+          </div>
         </AuthProvider>
 
         {/* Background ambient glow effects */}
