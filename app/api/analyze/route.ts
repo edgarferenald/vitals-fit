@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
                 "X-Title": "Vitals Fitness App",
             },
             body: JSON.stringify({
-                model: "google/gemini-2.0-flash-001",
+                model: "google/gemini-2.5-flash",
                 messages: [
                     {
                         role: "user",
