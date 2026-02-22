@@ -65,14 +65,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         // Get initial session
-        supabase.auth.getSession().then(({ data: { session } }) => {
-            setSession(session);
-            setUser(session?.user ?? null);
-            if (session?.user) {
-                fetchProfile(session.user.id, session.user.email);
-            }
-            setLoading(false);
-        });
+        supabase.auth.getSession()
+            .then(({ data: { session } }) => {
+                setSession(session);
+                setUser(session?.user ?? null);
+                if (session?.user) {
+                    fetchProfile(session.user.id, session.user.email);
+                }
+                setLoading(false);
+            })
+            .catch((err) => {
+                // If Supabase is unreachable (bad env vars, network error),
+                // always unblock the UI — show "not logged in" state
+                console.error("Supabase getSession error:", err);
+                setLoading(false);
+            });
 
         // Listen for auth changes
         const { data: { subscription } } = supabase.auth.onAuthStateChange(
