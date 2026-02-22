@@ -25,6 +25,21 @@ function getSupabaseClient(): SupabaseClient {
             storageKey: 'vitals-auth',
             autoRefreshToken: true,
             detectSessionInUrl: true
+        },
+        global: {
+            // Workaround for "AbortError: signal is aborted without reason"
+            // Supabase v2 internally calls cancelQueries() on token refresh,
+            // which aborts all pending requests via AbortSignal.
+            // Removing signal prevents operations (addWater, startStreak, etc.)
+            // from being silently cancelled during automatic session refresh.
+            fetch: (input: RequestInfo | URL, init?: RequestInit) => {
+                if (init) {
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                    const { signal, ...rest } = init;
+                    return fetch(input, rest);
+                }
+                return fetch(input, init);
+            }
         }
     });
 
