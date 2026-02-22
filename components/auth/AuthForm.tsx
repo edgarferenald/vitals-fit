@@ -13,6 +13,7 @@ export default function AuthForm() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
     const { t } = useLocale();
 
     const { signIn, signUp } = useAuth();
@@ -21,15 +22,30 @@ export default function AuthForm() {
         e.preventDefault();
         setLoading(true);
         setError("");
+        setSuccessMsg("");
 
-        const { error } = isLogin
-            ? await signIn(email, password)
-            : await signUp(email, password);
-
-        if (error) {
-            setError(error.message);
+        if (isLogin) {
+            const { error } = await signIn(email, password);
+            if (error) {
+                setError(error.message);
+            } else {
+                router.push("/");
+            }
         } else {
-            router.push("/");
+            const { error, needsConfirmation } = await signUp(email, password);
+            if (error) {
+                setError(error.message);
+            } else if (needsConfirmation) {
+                // Supabase email confirmation is ON — tell user to check email
+                setSuccessMsg(
+                    t("auth.checkEmail") ||
+                    "✅ Регистрация прошла! Проверьте почту и подтвердите email, затем войдите."
+                );
+                setIsLogin(true);
+            } else {
+                // Email confirmation is OFF — user is logged in immediately
+                router.push("/");
+            }
         }
 
         setLoading(false);
@@ -73,6 +89,12 @@ export default function AuthForm() {
 
                 {error && (
                     <p className="text-red-400 text-sm text-center">{error}</p>
+                )}
+
+                {successMsg && (
+                    <p className="text-neon-green text-sm text-center p-3 rounded-lg bg-neon-green/10 border border-neon-green/30">
+                        {successMsg}
+                    </p>
                 )}
 
                 <button

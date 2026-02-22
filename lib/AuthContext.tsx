@@ -19,7 +19,7 @@ interface AuthContextType {
     session: Session | null;
     loading: boolean;
     signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
-    signUp: (email: string, password: string) => Promise<{ error: Error | null }>;
+    signUp: (email: string, password: string) => Promise<{ error: Error | null; needsConfirmation: boolean }>;
     signOut: () => Promise<void>;
     updateProfile: (updates: Partial<UserProfile>) => Promise<void>;
     refreshProfile: () => Promise<void>;
@@ -33,7 +33,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [session, setSession] = useState<Session | null>(null);
     const [loading, setLoading] = useState(true);
 
-    const fetchProfile = async (userId: string) => {
+    // userEmail passed directly from session to avoid stale React state
+    const fetchProfile = async (userId: string, userEmail?: string | null) => {
         const { data, error } = await supabase
             .from("users")
             .select("*")
@@ -42,16 +43,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         if (error) {
             console.error("Error fetching profile:", error);
-            // Profile might not exist yet, create it
+            // Profile might not exist yet (no trigger), create it
             if (error.code === "PGRST116") {
                 const { data: newProfile, error: insertError } = await supabase
                     .from("users")
-                    .insert({ id: userId, email: user?.email })
+                    .insert({ id: userId, email: userEmail ?? null })
                     .select()
                     .single();
 
                 if (!insertError && newProfile) {
                     setProfile(newProfile as UserProfile);
+                } else if (insertError) {
+                    console.error("Error creating profile:", insertError);
                 }
             }
             return;
@@ -66,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setSession(session);
             setUser(session?.user ?? null);
             if (session?.user) {
-                fetchProfile(session.user.id);
+                fetchProfile(session.user.id, session.user.email);
             }
             setLoading(false);
         });
@@ -78,7 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 setUser(session?.user ?? null);
 
                 if (session?.user) {
-                    await fetchProfile(session.user.id);
+                    await fetchProfile(session.user.id, session.user.email);
                 } else {
                     setProfile(null);
                 }
@@ -96,8 +99,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
 
     const signUp = async (email: string, password: string) => {
-        const { error } = await supabase.auth.signUp({ email, password });
-        return { error };
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        // needsConfirmation = registered OK but no active session (email confirmation required)
+        const needsConfirmation = !error && !!data.user && !data.session;
+        return { error, needsConfirmation };
     };
 
     const signOut = async () => {
@@ -122,7 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const refreshProfile = async () => {
         if (user) {
-            await fetchProfile(user.id);
+            await fetchProfile(user.id, user.email);
         }
     };
 
