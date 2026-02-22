@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLocale } from "@/lib/LocaleContext";
 
 interface GoalModalProps {
     isOpen: boolean;
@@ -24,6 +25,7 @@ export default function GoalModal({
     presets = []
 }: GoalModalProps) {
     const [value, setValue] = useState(currentValue);
+    const { t } = useLocale();
 
     const handleSave = () => {
         onSave(value);
@@ -71,8 +73,8 @@ export default function GoalModal({
                                         key={preset}
                                         onClick={() => setValue(preset)}
                                         className={`px-3 py-1 rounded-full text-sm border transition-colors ${value === preset
-                                                ? "border-neon-green bg-neon-green/20 text-neon-green"
-                                                : "border-gray-600 text-gray-400 hover:border-gray-400"
+                                            ? "border-neon-green bg-neon-green/20 text-neon-green"
+                                            : "border-gray-600 text-gray-400 hover:border-gray-400"
                                             }`}
                                     >
                                         {preset}
@@ -85,7 +87,7 @@ export default function GoalModal({
                             onClick={handleSave}
                             className="w-full py-3 rounded-lg bg-neon-green text-black font-bold uppercase tracking-wider hover:bg-neon-green/80 transition-colors"
                         >
-                            Сохранить
+                            {t("settings.save")}
                         </button>
                     </motion.div>
                 </motion.div>

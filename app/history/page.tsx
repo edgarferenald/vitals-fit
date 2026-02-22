@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 
 import { useState, useEffect } from "react";
 import { useAuth } from "@/lib/AuthContext";
+import { useLocale } from "@/lib/LocaleContext";
 import { getFoodHistory, deleteFoodEntry, FoodEntry } from "@/lib/foodService";
 import GlassCard from "@/components/ui/GlassCard";
 import Header from "@/components/ui/Header";
@@ -12,6 +13,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function HistoryPage() {
     const { user } = useAuth();
+    const { t, locale } = useLocale();
     const [entries, setEntries] = useState<FoodEntry[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -47,15 +49,17 @@ export default function HistoryPage() {
         return groups;
     }, {} as Record<string, FoodEntry[]>);
 
+    const dateLocaleMap = { ru: "ru-RU", uk: "uk-UA", en: "en-US" } as const;
+
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr);
         const today = new Date().toISOString().split("T")[0];
         const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
 
-        if (dateStr === today) return "Сегодня";
-        if (dateStr === yesterday) return "Вчера";
+        if (dateStr === today) return t("history.today");
+        if (dateStr === yesterday) return t("history.yesterday");
 
-        return date.toLocaleDateString("ru-RU", {
+        return date.toLocaleDateString(dateLocaleMap[locale], {
             weekday: "short",
             day: "numeric",
             month: "short"
@@ -66,11 +70,11 @@ export default function HistoryPage() {
         <div className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen">
             <Header />
 
-            <h2 className="text-lg font-bold text-white">История еды</h2>
+            <h2 className="text-lg font-bold text-white">{t("history.title")}</h2>
 
             {!user ? (
                 <div className="flex-1 flex items-center justify-center">
-                    <p className="text-gray-400">Войдите для просмотра истории</p>
+                    <p className="text-gray-400">{t("history.loginToView")}</p>
                 </div>
             ) : loading ? (
                 <div className="flex-1 flex items-center justify-center">
@@ -80,8 +84,8 @@ export default function HistoryPage() {
                 <div className="flex-1 flex flex-col items-center justify-center gap-4">
                     <Utensils className="w-16 h-16 text-gray-600" />
                     <p className="text-gray-400 text-center">
-                        История пуста<br />
-                        <span className="text-sm">Отсканируйте еду, чтобы начать</span>
+                        {t("history.empty")}<br />
+                        <span className="text-sm">{t("history.scanToStart")}</span>
                     </p>
                 </div>
             ) : (
@@ -104,10 +108,10 @@ export default function HistoryPage() {
                                                 <div className="flex-1">
                                                     <h4 className="font-bold text-white">{entry.food_name}</h4>
                                                     <div className="flex gap-3 text-xs text-gray-400 mt-1">
-                                                        <span className="text-neon-pink">{entry.calories} ккал</span>
-                                                        <span>Б: {entry.protein}г</span>
-                                                        <span>Ж: {entry.fat}г</span>
-                                                        <span>У: {entry.carbs}г</span>
+                                                        <span className="text-neon-pink">{entry.calories} {t("calories.kcal")}</span>
+                                                        <span>{t("history.p")}: {entry.protein}g</span>
+                                                        <span>{t("history.f")}: {entry.fat}g</span>
+                                                        <span>{t("history.c")}: {entry.carbs}g</span>
                                                     </div>
                                                 </div>
                                                 <button

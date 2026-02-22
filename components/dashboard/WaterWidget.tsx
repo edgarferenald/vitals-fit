@@ -7,10 +7,12 @@ import GoalModal from "../ui/GoalModal";
 import { Droplets, Plus, Minus, Settings } from "lucide-react";
 import ProgressBar from "../ui/ProgressBar";
 import { useAuth } from "@/lib/AuthContext";
+import { useLocale } from "@/lib/LocaleContext";
 import { getTodayWater, addWater, removeWater, updateWaterGoal } from "@/lib/waterService";
 
 export default function WaterWidget() {
     const { user, profile, refreshProfile } = useAuth();
+    const { t } = useLocale();
     const [waterAmount, setWaterAmount] = useState(0);
     const [loading, setLoading] = useState(false);
     const [showGoalModal, setShowGoalModal] = useState(false);
@@ -64,12 +66,12 @@ export default function WaterWidget() {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5 sm:gap-2 text-neon-blue">
                         <Droplets className="w-4 h-4 sm:w-6 sm:h-6 animate-pulse" />
-                        <h3 className="text-sm sm:text-lg font-bold uppercase tracking-wider">Вода</h3>
+                        <h3 className="text-sm sm:text-lg font-bold uppercase tracking-wider">{t("water.title")}</h3>
                     </div>
-                    <span className="text-lg sm:text-2xl font-orbitron">0<span className="text-xs sm:text-sm ml-0.5">мл</span></span>
+                    <span className="text-lg sm:text-2xl font-orbitron">0<span className="text-xs sm:text-sm ml-0.5">{t("water.ml")}</span></span>
                 </div>
                 <ProgressBar progress={0} color="blue" />
-                <p className="text-center text-xs text-gray-400">Войдите для отслеживания</p>
+                <p className="text-center text-xs text-gray-400">{t("water.loginToTrack")}</p>
             </GlassCard>
         );
     }
@@ -80,20 +82,20 @@ export default function WaterWidget() {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5 sm:gap-2 text-neon-blue">
                         <Droplets className="w-4 h-4 sm:w-6 sm:h-6 animate-pulse" />
-                        <h3 className="text-sm sm:text-lg font-bold uppercase tracking-wider">Вода</h3>
+                        <h3 className="text-sm sm:text-lg font-bold uppercase tracking-wider">{t("water.title")}</h3>
                     </div>
                     <button
                         onClick={() => setShowGoalModal(true)}
                         className="flex items-center gap-1 text-lg sm:text-2xl font-orbitron hover:text-neon-blue transition-colors"
                     >
-                        {waterAmount}<span className="text-xs sm:text-sm ml-0.5">мл</span>
+                        {waterAmount}<span className="text-xs sm:text-sm ml-0.5">{t("water.ml")}</span>
                         <Settings className="w-3 h-3 text-gray-500" />
                     </button>
                 </div>
 
                 <div className="relative">
                     <ProgressBar progress={percentage} color="blue" />
-                    <div className="text-right text-[10px] sm:text-xs text-gray-400 mt-0.5">Цель: {goal}мл</div>
+                    <div className="text-right text-[10px] sm:text-xs text-gray-400 mt-0.5">{t("water.goal", { goal })}</div>
                 </div>
 
                 <div className="flex gap-2">
@@ -109,7 +111,7 @@ export default function WaterWidget() {
                         disabled={loading}
                         className="flex-[2] flex items-center justify-center gap-1 text-xs sm:text-sm py-1.5 sm:py-2"
                     >
-                        <Plus className="w-3 h-3 sm:w-4 sm:h-4" /> 150мл
+                        <Plus className="w-3 h-3 sm:w-4 sm:h-4" /> 150{t("water.ml")}
                     </NeonButton>
                 </div>
             </GlassCard>
@@ -117,9 +119,9 @@ export default function WaterWidget() {
             <GoalModal
                 isOpen={showGoalModal}
                 onClose={() => setShowGoalModal(false)}
-                title="Цель воды"
+                title={t("water.goalTitle")}
                 currentValue={goal}
-                unit="миллилитров в день"
+                unit={t("water.goalUnit")}
                 onSave={handleSaveGoal}
                 presets={[1500, 2000, 2500, 3000]}
             />

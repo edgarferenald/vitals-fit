@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
+import { useLocale } from "@/lib/LocaleContext";
 import { motion } from "framer-motion";
 
 export default function AuthForm() {
@@ -12,6 +13,7 @@ export default function AuthForm() {
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const { t } = useLocale();
 
     const { signIn, signUp } = useAuth();
 
@@ -27,7 +29,6 @@ export default function AuthForm() {
         if (error) {
             setError(error.message);
         } else {
-            // Redirect to home after successful login/registration
             router.push("/");
         }
 
@@ -41,24 +42,24 @@ export default function AuthForm() {
             className="w-full max-w-sm mx-auto p-6 rounded-2xl bg-black/50 border border-neon-green/30 backdrop-blur-lg"
         >
             <h2 className="text-2xl font-bold text-center text-white mb-6">
-                {isLogin ? "Вход" : "Регистрация"}
+                {isLogin ? t("auth.login") : t("auth.register")}
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block text-sm text-gray-400 mb-1">Email</label>
+                    <label className="block text-sm text-gray-400 mb-1">{t("auth.email")}</label>
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="w-full px-4 py-3 rounded-lg bg-black/50 border border-neon-green/30 text-white focus:outline-none focus:border-neon-green transition-colors"
-                        placeholder="your@email.com"
+                        placeholder={t("auth.emailPlaceholder")}
                         required
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm text-gray-400 mb-1">Пароль</label>
+                    <label className="block text-sm text-gray-400 mb-1">{t("auth.password")}</label>
                     <input
                         type="password"
                         value={password}
@@ -79,17 +80,17 @@ export default function AuthForm() {
                     disabled={loading}
                     className="w-full py-3 rounded-lg bg-neon-green text-black font-bold uppercase tracking-wider hover:bg-neon-green/80 transition-colors disabled:opacity-50"
                 >
-                    {loading ? "Загрузка..." : isLogin ? "Войти" : "Создать аккаунт"}
+                    {loading ? t("auth.loading") : isLogin ? t("auth.submit.login") : t("auth.submit.register")}
                 </button>
             </form>
 
             <p className="text-center text-gray-400 mt-4 text-sm">
-                {isLogin ? "Нет аккаунта?" : "Уже есть аккаунт?"}{" "}
+                {isLogin ? t("auth.noAccount") : t("auth.hasAccount")}{" "}
                 <button
                     onClick={() => setIsLogin(!isLogin)}
                     className="text-neon-green hover:underline"
                 >
-                    {isLogin ? "Регистрация" : "Войти"}
+                    {isLogin ? t("auth.register") : t("auth.submit.login")}
                 </button>
             </p>
         </motion.div>

@@ -6,10 +6,12 @@ import GoalModal from "../ui/GoalModal";
 import { Flame, Settings } from "lucide-react";
 import ProgressBar from "../ui/ProgressBar";
 import { useAuth } from "@/lib/AuthContext";
+import { useLocale } from "@/lib/LocaleContext";
 import { getTodayCalories, updateCalorieGoal } from "@/lib/foodService";
 
 export default function CalorieWidget() {
     const { user, profile, refreshProfile } = useAuth();
+    const { t } = useLocale();
     const [calories, setCalories] = useState(0);
     const [showGoalModal, setShowGoalModal] = useState(false);
 
@@ -42,12 +44,12 @@ export default function CalorieWidget() {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5 sm:gap-2 text-neon-pink">
                         <Flame className="w-4 h-4 sm:w-6 sm:h-6 animate-bounce" />
-                        <h3 className="text-sm sm:text-lg font-bold uppercase tracking-wider">Калории</h3>
+                        <h3 className="text-sm sm:text-lg font-bold uppercase tracking-wider">{t("calories.title")}</h3>
                     </div>
-                    <span className="text-lg sm:text-2xl font-orbitron">0<span className="text-xs sm:text-sm ml-0.5">ккал</span></span>
+                    <span className="text-lg sm:text-2xl font-orbitron">0<span className="text-xs sm:text-sm ml-0.5">{t("calories.kcal")}</span></span>
                 </div>
                 <ProgressBar progress={0} color="pink" />
-                <p className="text-center text-xs text-gray-400">Войдите для отслеживания</p>
+                <p className="text-center text-xs text-gray-400">{t("calories.loginToTrack")}</p>
             </GlassCard>
         );
     }
@@ -58,13 +60,13 @@ export default function CalorieWidget() {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5 sm:gap-2 text-neon-pink">
                         <Flame className="w-4 h-4 sm:w-6 sm:h-6 animate-bounce" />
-                        <h3 className="text-sm sm:text-lg font-bold uppercase tracking-wider">Калории</h3>
+                        <h3 className="text-sm sm:text-lg font-bold uppercase tracking-wider">{t("calories.title")}</h3>
                     </div>
                     <button
                         onClick={() => setShowGoalModal(true)}
                         className="flex items-center gap-1 text-lg sm:text-2xl font-orbitron hover:text-neon-pink transition-colors"
                     >
-                        {calories}<span className="text-xs sm:text-sm ml-0.5">ккал</span>
+                        {calories}<span className="text-xs sm:text-sm ml-0.5">{t("calories.kcal")}</span>
                         <Settings className="w-3 h-3 text-gray-500" />
                     </button>
                 </div>
@@ -72,8 +74,8 @@ export default function CalorieWidget() {
                 <div className="relative">
                     <ProgressBar progress={percentage} color="pink" />
                     <div className="flex justify-between text-[10px] sm:text-xs text-gray-400 mt-0.5">
-                        <span>Потреблено</span>
-                        <span>Цель: {goal}</span>
+                        <span>{t("calories.consumed")}</span>
+                        <span>{t("calories.goal", { goal })}</span>
                     </div>
                 </div>
             </GlassCard>
@@ -81,9 +83,9 @@ export default function CalorieWidget() {
             <GoalModal
                 isOpen={showGoalModal}
                 onClose={() => setShowGoalModal(false)}
-                title="Цель калорий"
+                title={t("calories.goalTitle")}
                 currentValue={goal}
-                unit="килокалорий в день"
+                unit={t("calories.goalUnit")}
                 onSave={handleSaveGoal}
                 presets={[1500, 2000, 2500, 3000]}
             />

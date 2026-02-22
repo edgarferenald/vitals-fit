@@ -7,10 +7,12 @@ import { compressImage } from "@/utils/imageUtils";
 import { analyzeFoodImage, FoodAnalysisResult } from "@/lib/gemini";
 import ScanResultModal from "./ScanResultModal";
 import { useAuth } from "@/lib/AuthContext";
+import { useLocale } from "@/lib/LocaleContext";
 import { addFoodEntry } from "@/lib/foodService";
 
 export default function FoodScanner() {
     const { user } = useAuth();
+    const { t } = useLocale();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [result, setResult] = useState<FoodAnalysisResult | null>(null);
@@ -33,7 +35,7 @@ export default function FoodScanner() {
 
         } catch (error) {
             console.error("Scanning failed:", error);
-            alert("Не удалось распознать. Попробуйте снова.");
+            alert(t("scanner.error"));
         } finally {
             setIsAnalyzing(false);
             if (fileInputRef.current) fileInputRef.current.value = "";
