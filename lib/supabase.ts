@@ -24,21 +24,13 @@ function getSupabaseClient(): SupabaseClient {
             persistSession: true,
             storageKey: 'vitals-auth',
             autoRefreshToken: true,
-            detectSessionInUrl: true
-        },
-        global: {
-            // Workaround for "AbortError: signal is aborted without reason"
-            // Supabase v2 internally calls cancelQueries() on token refresh,
-            // which aborts all pending requests via AbortSignal.
-            // Removing signal prevents operations (addWater, startStreak, etc.)
-            // from being silently cancelled during automatic session refresh.
-            fetch: (input: RequestInfo | URL, init?: RequestInit) => {
-                if (init) {
-                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                    const { signal, ...rest } = init;
-                    return fetch(input, rest);
-                }
-                return fetch(input, init);
+            detectSessionInUrl: true,
+            // WORKAROUND FOR SUPABASE + REACT 19 STRICT MODE BUG
+            // "AbortError: signal is aborted without reason"
+            // The browser's Web Locks API freezes when unmounted mid-operation
+            // Providing a dummy lock bypasses this issue entirely
+            lock: async (name: string, acquireTimeout: number, fn: () => Promise<any>) => {
+                return await fn();
             }
         }
     });
