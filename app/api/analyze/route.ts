@@ -40,55 +40,70 @@ export async function POST(request: NextRequest) {
 }
 Не включай форматирование markdown. Только чистый JSON.`;
 
-        // Use OpenRouter API with a vision model
-        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${API_KEY}`,
-                "Content-Type": "application/json",
-                "HTTP-Referer": "https://vitals-fit-xi.vercel.app",
-                "X-Title": "Vitals Fitness App",
-            },
-            body: JSON.stringify({
-                model: "google/gemini-2.5-flash",
-                messages: [
-                    {
-                        role: "user",
-                        content: [
-                            { type: "text", text: prompt },
+        // Define primary and fallback models
+        const modelsToTry = ["google/gemini-2.5-flash", "openai/gpt-4o"];
+        let responseText = null;
+        let lastError = null;
+        let lastStatus = 500;
+
+        for (const model of modelsToTry) {
+            console.log(`Trying model: ${model}`);
+            try {
+                const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${API_KEY}`,
+                        "Content-Type": "application/json",
+                        "HTTP-Referer": "https://vitals-fit-xi.vercel.app",
+                        "X-Title": "Vitals Fitness App",
+                    },
+                    body: JSON.stringify({
+                        model: model,
+                        messages: [
                             {
-                                type: "image_url",
-                                image_url: {
-                                    url: image.startsWith("data:") ? image : `data:image/jpeg;base64,${image}`,
-                                },
+                                role: "user",
+                                content: [
+                                    { type: "text", text: prompt },
+                                    {
+                                        type: "image_url",
+                                        image_url: {
+                                            url: image.startsWith("data:") ? image : `data:image/jpeg;base64,${image}`,
+                                        },
+                                    },
+                                ],
                             },
                         ],
-                    },
-                ],
-                max_tokens: 1024,
-                temperature: 0.4,
-            }),
-        });
+                        max_tokens: 1024,
+                        temperature: 0.4,
+                    }),
+                });
 
-        const data = await response.json();
-        console.log("OpenRouter Response status:", response.status);
+                const data = await response.json();
+                console.log(`OpenRouter Response status for ${model}:`, response.status);
 
-        if (!response.ok) {
-            console.error("OpenRouter Error:", data);
-            return NextResponse.json(
-                { error: data.error?.message || "OpenRouter API error" },
-                { status: response.status }
-            );
+                if (response.ok) {
+                    responseText = data.choices?.[0]?.message?.content;
+                    if (responseText) {
+                        console.log(`OpenRouter Response text from ${model}:`, responseText?.substring(0, 200));
+                        break; // Success! Exit the loop.
+                    }
+                } else {
+                    console.error(`OpenRouter Error for ${model}:`, data);
+                    lastError = data.error?.message || "OpenRouter API error";
+                    lastStatus = response.status;
+                    // Continue to the next model in the array
+                }
+            } catch (err: any) {
+                console.error(`Fetch error for ${model}:`, err);
+                lastError = err.message || "Network error";
+                // Continue to the next model
+            }
         }
-
-        // Extract text from response
-        const responseText = data.choices?.[0]?.message?.content;
-        console.log("OpenRouter Response text:", responseText?.substring(0, 200));
 
         if (!responseText) {
             return NextResponse.json(
-                { error: "No response from OpenRouter" },
-                { status: 500 }
+                { error: lastError || "All models failed" },
+                { status: lastStatus }
             );
         }
 
