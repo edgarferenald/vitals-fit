@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Article } from "@/lib/articlesData";
+import { useLocale } from "@/lib/LocaleContext";
 
 interface ArticleCardProps {
     article: Article;
@@ -10,6 +11,7 @@ interface ArticleCardProps {
 }
 
 export default function ArticleCard({ article, onClick }: ArticleCardProps) {
+    const { t } = useLocale();
     return (
         <motion.div
             whileHover={{ scale: 1.02 }}
@@ -35,7 +37,7 @@ export default function ArticleCard({ article, onClick }: ArticleCardProps) {
 
                 {/* Read indicator */}
                 <div className="absolute top-3 right-3 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm text-[10px] text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">
-                    Читать →
+                    {t("articles.read")}
                 </div>
             </div>
 

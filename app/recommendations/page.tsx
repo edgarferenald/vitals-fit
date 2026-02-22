@@ -5,12 +5,13 @@ import Header from "@/components/ui/Header";
 import Calculator from "@/components/recommendations/Calculator";
 import ArticleCard from "@/components/recommendations/ArticleCard";
 import ArticleModal from "@/components/recommendations/ArticleModal";
-import { articles, Article } from "@/lib/articlesData";
+import { getArticles, Article } from "@/lib/articlesData";
 import { useLocale } from "@/lib/LocaleContext";
 
 export default function RecommendationsPage() {
     const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
-    const { t } = useLocale();
+    const { t, locale } = useLocale();
+    const localizedArticles = getArticles(locale);
 
     return (
         <div className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen overflow-auto pb-6">
@@ -25,7 +26,7 @@ export default function RecommendationsPage() {
             <div className="mt-4">
                 <h3 className="text-sm text-gray-400 uppercase tracking-wider mb-3">{t("recommendations.articles")}</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {articles.map((article) => (
+                    {localizedArticles.map((article) => (
                         <ArticleCard
                             key={article.id}
                             article={article}

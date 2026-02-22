@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Article } from "@/lib/articlesData";
+import { useLocale } from "@/lib/LocaleContext";
 
 interface ArticleModalProps {
     article: Article | null;
@@ -11,6 +12,7 @@ interface ArticleModalProps {
 }
 
 export default function ArticleModal({ article, onClose }: ArticleModalProps) {
+    const { t } = useLocale();
     if (!article) return null;
 
     return (
@@ -77,7 +79,7 @@ export default function ArticleModal({ article, onClose }: ArticleModalProps) {
                             onClick={onClose}
                             className="w-full py-3 rounded-xl bg-neon-green/10 text-neon-green font-bold hover:bg-neon-green/20 transition-colors"
                         >
-                            Закрыть
+                            {t("articles.close")}
                         </button>
                     </div>
                 </motion.div>

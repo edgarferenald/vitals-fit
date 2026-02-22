@@ -76,6 +76,8 @@ export const translations: Record<Locale, Record<string, string>> = {
         // Recommendations
         "recommendations.title": "Рекомендации",
         "recommendations.articles": "Полезные статьи",
+        "articles.read": "Читать →",
+        "articles.close": "Закрыть",
 
         // Calculator
         "calc.title": "Калькулятор норм",
@@ -199,6 +201,8 @@ export const translations: Record<Locale, Record<string, string>> = {
         // Recommendations
         "recommendations.title": "Рекомендації",
         "recommendations.articles": "Корисні статті",
+        "articles.read": "Читати →",
+        "articles.close": "Закрити",
 
         // Calculator
         "calc.title": "Калькулятор норм",
@@ -322,6 +326,8 @@ export const translations: Record<Locale, Record<string, string>> = {
         // Recommendations
         "recommendations.title": "Recommendations",
         "recommendations.articles": "Useful articles",
+        "articles.read": "Read →",
+        "articles.close": "Close",
 
         // Calculator
         "calc.title": "Norm Calculator",

@@ -1,4 +1,5 @@
-// Article content data
+// Article content data with multi-language support
+import { Locale } from "./translations";
 
 export interface Article {
     id: string;
@@ -10,7 +11,7 @@ export interface Article {
     content: string;
 }
 
-export const articles: Article[] = [
+const articlesRu: Article[] = [
     {
         id: "water",
         title: "Физиология гидратации",
@@ -222,3 +223,442 @@ export const articles: Article[] = [
 - Интенсивная силовая и аэробная нагрузка должна быть завершена минимум за 3 часа до сна для снижения активности симпатической нервной системы.`
     }
 ];
+
+const articlesUk: Article[] = [
+    {
+        id: "water",
+        title: "Фізіологія гідратації",
+        description: "Аналіз впливу водного балансу на швидкість метаболічних процесів. Наукове обґрунтування нормованого питного режиму.",
+        imageUrl: "/articles/article_water_1769947735698.png",
+        emoji: "💧",
+        color: "from-neon-blue/80",
+        content: `## Роль води у клітинному метаболізмі
+
+Молекули води є невід'ємним середовищем для перебігу всіх біохімічних реакцій в організмі. Підтримка адекватної гідратації є критичним фактором нормального функціонування метаболічних шляхів.
+
+### Науково доведені механізми
+
+**1. Термогенний ефект**
+Клінічні дослідження демонструють, що споживання 500 мл води за кімнатної температури збільшує енерговитрати спокою на 24-30% протягом 60-90 хвилин. Ефект зумовлений витратами теплової енергії на нагрівання рідини до температури внутрішнього середовища організму.
+
+**2. Ліполіз та гідратація клітин**
+Гідроліз тригліцеридів (ліполіз) біохімічно потребує участі молекул води. Клітинна дегідратація інгібує активність ліпази, знижуючи швидкість окислення жирних кислот.
+
+**3. Нейроендокринна регуляція апетиту**
+Сигнали спраги та голоду інтегруються у суміжних ядрах гіпоталамуса, що часто призводить до їх суб'єктивного змішування. Превентивне споживання води перед їжею статистично достовірно знижує енергетичне споживання на 75-90 ккал за один прийом їжі.
+
+### Протокол гідратації
+
+Базова норма споживання розраховується за формулою: **35 мл * масу тіла (кг)**.
+
+Приклад для людини масою 70 кг: 35 * 70 = 2450 мл на добу.
+
+### Практичні рекомендації
+
+- Вживання 200-300 мл рідини за 30 хвилин до прийому їжі.
+- Компенсація втрат рідини: додаткові 500 мл на кожну годину інтенсивного фізичного навантаження.
+- Зниження обсягу рідини за 2 години до сну для мінімізації нічного діурезу.`
+    },
+    {
+        id: "calories",
+        title: "Енергетичний баланс",
+        description: "Закони термодинаміки в контексті людського тіла. Фізіологічні основи створення енергетичного дефіциту.",
+        imageUrl: "/articles/article_calories_1769947752149.png",
+        emoji: "⚡",
+        color: "from-neon-pink/80",
+        content: `## Термодинаміка та маса тіла
+
+Калорія являє собою одиницю енергії. Динаміка маси тіла строго підпорядковується першому закону термодинаміки: перевищення надходження енергії над її витратами веде до анаболізму жирової тканини, тоді як дефіцит енергії ініціює катаболізм.
+
+### Структура енерговитрат
+
+Добова витрата енергії (TDEE) складається з кількох незалежних компонентів:
+
+- **BMR (60-70%)**: Базовий рівень метаболізму. Енергія для підтримки життєдіяльності у стані повного спокою.
+- **TEF (10%)**: Термічний ефект їжі. Витрати на травлення, абсорбцію та утилізацію нутрієнтів.
+- **NEAT (15-20%)**: Спонтанна фізична активність. Термогенез без урахування цілеспрямованих тренувань.
+- **EAT (5-10%)**: Цілеспрямовані фізичні навантаження.
+
+### Принципи редукції маси тіла
+
+Для індукування ліполізу необхідний енергетичний дефіцит у розмірі **15-25%** від добової норми (TDEE):
+- Дефіцит у 500 ккал на добу корелює із втратою приблизно 0.5 кг тканини на тиждень.
+- Оптимальна швидкість втрати маси складає від 0.5% до 1% від загальної маси тіла на тиждень.
+
+### Запобіжні заходи
+
+Різке обмеження калорійності нижче рівня BMR викликає адаптивний термогенез та втрату безжирової маси тіла. Рекомендується підтримувати помірний дефіцит та забезпечувати достатній синтез білка.`
+    },
+    {
+        id: "protein",
+        title: "Амінокислотний профіль",
+        description: "Фізіологія синтезу м'язового білка. Норми споживання протеїну для гіпертрофії та збереження сухої маси.",
+        imageUrl: "/articles/article_protein_1769947766366.png",
+        emoji: "🧬",
+        color: "from-neon-green/80",
+        content: `## Будівельні блоки тканин
+
+Протеїн забезпечує організм незамінними амінокислотами, які є фундаментальним субстратом для синтезу м'язового білка (СМБ). Підтримка позитивного азотистого балансу є обов'язковою для збереження безжирової маси.
+
+### Норми споживання протеїну
+
+Рекомендовані норми варіюються залежно від фізіологічних цілей:
+
+- **Підтримка гомеостазу**: 1.2 - 1.6 г
+- **Період енергодефіциту**: 1.6 - 2.2 г
+- **М'язова гіпертрофія**: 1.6 - 2.0 г
+
+При масі 80 кг в умовах енергетичного дефіциту добова потреба складає близько 160 г протеїну.
+
+### Класифікація джерел протеїну
+
+**Джерела тваринного походження (повний спектр незамінних амінокислот):**
+- Куряча грудка: 31 г на 100 г
+- Пісна яловичина: 26 г на 100 г
+- Яєчний білок: висока біологічна цінність, 6 г на одне яйце
+- Сир кисломолочний (казеїн): 18 г на 100 г
+
+**Джерела рослинного походження:**
+- Сочевиця: 24 г на 100 г
+- Соєвий тофу: 8 г на 100 г
+(Для вегетаріанців потрібне комбінування джерел для отримання повноцінного амінокислотного профілю).
+
+### Кінетика засвоєння
+
+Дослідження показують, що розподіл добової норми білка порціями по 25-40 г максимізує стимулюючий вплив на СМБ. Твердження про "ліміт засвоєння у 30 грамів за один прийом" не підтверджується сучасними метаболічними дослідженнями, однак рівномірний розподіл протягом дня залишається оптимальною стратегією.`
+    },
+    {
+        id: "nutrition",
+        title: "Нутриціологія та дієтологія",
+        description: "Біохімічна роль мікро- та макронутрієнтів. Фундаментальні принципи побудови довгострокового раціону.",
+        imageUrl: "/articles/article_nutrition_1769947792368.png",
+        emoji: "БЖВ",
+        color: "from-purple-500/80",
+        content: `## Фундаментальні принципи раціону
+
+Збалансоване харчування базується на наданні організму всіх необхідних хімічних елементів для підтримки ендокринного та клітинного здоров'я без застосування екстремальних обмежень.
+
+### Структура макронутрієнтів
+
+**Протеїни (4 ккал/г)**
+Відповідають за структурне відновлення клітин та синтез ферментів. Забезпечують високий індекс ситості, що є критичним при обмеженні калорій. Рекомендована квота: 25-35% добової енергії.
+
+**Ліпіди (9 ккал/г)**
+Необхідні для синтезу стероїдних гормонів, компонентів клітинних мембран та абсорбції жиророзчинних вітамінів. Слід мінімізувати споживання штучних трансжирів, роблячи акцент на мононенасичених та поліненасичених жирних кислотах (Омега-3). Квота: 25-35%.
+
+**Вуглеводи (4 ккал/г)**
+Пріоритетний вектор забезпечення глюкозою ЦНС та м'язових тканин. Рекомендуються складні полісахариди з низьким глікемічним індексом. Квота: 30-50%.
+
+### Принцип формування прийому їжі
+
+Для контролю порцій використовується правило тарілки:
+- 50% обсягу порції: клітковина (овочі некрохмальних сортів).
+- 25% обсягу порції: білкові структури.
+- 25% обсягу порції: полісахариди (крупи, бобові).
+
+### Клінічні рекомендації
+
+- Мінімізація вільних цукрів: менше 25 г на добу для запобігання інсулінорезистентності.
+- Споживання харчових волокон (клітковини): 25-35 г на добу для модуляції мікробіоти кишечника.
+- Виключення етанолу, оскільки він має виражену токсичність та інгібує метаболізм ліпідів.`
+    },
+    {
+        id: "fasting",
+        title: "Інтервальне харчове вікно",
+        description: "Механізми аутофагії та інсулінорезистентності. Клінічний розбір переривчастого голодування.",
+        imageUrl: "/articles/article_fasting_1769947807036.png",
+        emoji: "⏱️",
+        color: "from-orange-500/80",
+        content: `## Переривчасте харчування (Intermittent Fasting)
+
+Інтервальне голодування являє собою протокол хронохарчування, що обмежує час прийому їжі для оптимізації циркадних ритмів та метаболічних маркерів.
+
+### Доведені протоколи
+
+**Протокол 16/8**
+Включає 16 годин повного утримання від калорій та 8-годинне вікно для їх споживання (наприклад, з 12:00 до 20:00). Є найбільш вивченим у клінічній практиці.
+
+**Протокол 20/4**
+Більш агресивна форма, що індукує глибокий глікогеновий дефіцит.
+
+### Метаболічні зміни
+
+- **12-18 годин**: Починається виснаження печінкового глікогену, активується кетогенез.
+- **18-24 години**: Різке зниження секреції інсуліну; потенційна стимуляція аутофагії.
+- **24+ години**: Максимальна мобілізація жирних кислот з адипоцитів.
+
+### Фізіологічні переваги
+
+Задокументовані ефекти включають підвищення чутливості рецепторів клітин до інсуліну, зниження рівня оксидативного стресу та потенційну оптимізацію контролю за загальним енергетичним балансом.
+
+### Протипоказання
+
+Даний режим не рекомендований при:
+- Вагітності та лактації.
+- Наявності в анамнезі розладів харчової поведінки.
+- Цукровому діабеті 1 типу (небезпека гіпоглікемії).
+- Захворюваннях жовчовивідних шляхів у стадії загострення.
+
+При входженні в протокол рекомендується плавне скорочення харчового вікна та забезпечення належної гідратації безкалорійними напоями.`
+    },
+    {
+        id: "sleep",
+        title: "Циркадні ритми та сон",
+        description: "Нейроендокринні зміни під час сну. Вплив депривації сну на ліполіз та секрецію соматотропіну.",
+        imageUrl: "/articles/article_sleep.png",
+        emoji: "🧠",
+        color: "from-indigo-500/80",
+        content: `## Сон як метаболічний регулятор
+
+Хронічна депривація сну є одним з найсильніших факторів ризику розвитку метаболічного синдрому. Відсутність якісного відновлення повністю нівелює результати дієтотерапії.
+
+### Гормональний дисбаланс при недосипанні
+
+**Модуляція апетиту:**
+Брак сну навіть протягом кількох ночей призводить до підвищення рівня греліну (гормону, що стимулює апетит) на 15% та еквівалентного зниження рівня лептину (фактора ситості). Це провокує гіперкалорійну поведінку.
+
+**Синтез тканин:**
+Пік секреції соматотропного гормону (гормону росту), відповідального за регенерацію м'язової тканини, припадає на фазу глибокого повільного сну. При порушенні архітектури сну процес білкового синтезу пригнічується.
+
+### Клінічні норми сну
+
+Для підтримки гомеостазу дорослій людині потрібно від 7 до 9 годин сну на добу. Якість сну (відсоткове співвідношення фаз REM та NREM) має рівне значення з його тривалістю.
+
+### Протоколи гігієни сну
+
+**Оптимізація середовища:**
+- Підтримка температури повітря у спальні на рівні 18-20 градусів Цельсія.
+- Абсолютна мінімізація світлового забруднення для синтезу мелатоніну.
+- Виключення експозиції синього спектра світла від дисплеїв електронних пристроїв за 60-90 хвилин до сну.
+
+**Поведінкові обмеження:**
+- Період напіввиведення кофеїну складає близько 5 годин. Слід уникати його вживання у другій половині дня.
+- Інтенсивне силове та аеробне навантаження має бути завершене мінімум за 3 години до сну.`
+    }
+];
+
+const articlesEn: Article[] = [
+    {
+        id: "water",
+        title: "Hydration Physiology",
+        description: "Analysis of water balance impact on metabolic processes. Scientific basis for a normalized drinking regimen.",
+        imageUrl: "/articles/article_water_1769947735698.png",
+        emoji: "💧",
+        color: "from-neon-blue/80",
+        content: `## Role of Water in Cellular Metabolism
+
+Water molecules serve as an essential medium for all biochemical reactions in the body. Maintaining adequate hydration is a critical factor for normal metabolic pathway function.
+
+### Scientifically Proven Mechanisms
+
+**1. Thermogenic Effect**
+Clinical studies demonstrate that consuming 500 ml of water at room temperature increases resting energy expenditure by 24-30% for 60-90 minutes. The effect is due to thermal energy costs of heating the ingested fluid to core body temperature.
+
+**2. Lipolysis and Cell Hydration**
+Triglyceride hydrolysis (lipolysis) biochemically requires water molecules. Cellular dehydration inhibits lipase activity, thereby reducing the rate of fatty acid oxidation.
+
+**3. Neuroendocrine Appetite Regulation**
+Thirst and hunger signals integrate in adjacent hypothalamic nuclei, often leading to subjective confusion between them. Preventive water consumption before meals statistically reduces energy intake by 75-90 kcal per meal.
+
+### Hydration Protocol
+
+The baseline intake is calculated by the formula: **35 ml x body weight (kg)**.
+
+Example for a 70 kg person: 35 x 70 = 2,450 ml per day.
+
+### Practical Recommendations
+
+- Consume 200-300 ml of fluid 30 minutes before meals.
+- Compensate fluid losses: an additional 500 ml per hour of intense physical activity.
+- Reduce fluid intake 2 hours before sleep to minimize nocturnal diuresis.`
+    },
+    {
+        id: "calories",
+        title: "Energy Balance",
+        description: "Laws of thermodynamics in the context of the human body. Physiological basis for creating an energy deficit.",
+        imageUrl: "/articles/article_calories_1769947752149.png",
+        emoji: "⚡",
+        color: "from-neon-pink/80",
+        content: `## Thermodynamics and Body Mass
+
+A calorie is a unit of energy. Body mass dynamics strictly follow the first law of thermodynamics: energy intake exceeding expenditure leads to adipose tissue anabolism, while an energy deficit initiates catabolism.
+
+### Energy Expenditure Structure
+
+Total Daily Energy Expenditure (TDEE) consists of several independent components:
+
+- **BMR (60-70%)**: Basal Metabolic Rate. Energy required to sustain life at complete rest.
+- **TEF (10%)**: Thermic Effect of Food. Costs of digestion, absorption, and nutrient utilization.
+- **NEAT (15-20%)**: Non-Exercise Activity Thermogenesis. Spontaneous physical activity excluding intentional exercise.
+- **EAT (5-10%)**: Exercise Activity Thermogenesis. Intentional physical training.
+
+### Principles of Weight Reduction
+
+To induce lipolysis, an energy deficit of **15-25%** of daily norm (TDEE) is required:
+- A 500 kcal daily deficit correlates with approximately 0.5 kg of tissue loss per week.
+- The optimal and physiologically safe rate of mass loss is 0.5% to 1% of total body weight per week.
+
+### Precautions
+
+Drastic caloric restriction below BMR level triggers adaptive thermogenesis (metabolic adaptation) and lean body mass loss. To minimize the risk of muscle catabolism, maintain a moderate deficit and ensure adequate protein synthesis.`
+    },
+    {
+        id: "protein",
+        title: "Amino Acid Profile",
+        description: "Muscle protein synthesis physiology. Protein intake norms for hypertrophy and lean mass preservation.",
+        imageUrl: "/articles/article_protein_1769947766366.png",
+        emoji: "🧬",
+        color: "from-neon-green/80",
+        content: `## Building Blocks of Tissues
+
+Protein provides the body with essential amino acids that serve as the fundamental substrate for Muscle Protein Synthesis (MPS). Maintaining a positive nitrogen balance is mandatory for lean mass preservation.
+
+### Protein Intake Norms
+
+Recommended norms vary depending on physiological goals:
+
+- **Homeostasis maintenance**: 1.2 - 1.6 g per kg
+- **Energy deficit period**: 1.6 - 2.2 g per kg
+- **Muscle hypertrophy**: 1.6 - 2.0 g per kg
+
+At 80 kg body weight during energy deficit, daily protein requirement is approximately 160 g.
+
+### Protein Source Classification
+
+**Animal sources (complete essential amino acid spectrum):**
+- Chicken breast: 31 g per 100 g
+- Lean beef: 26 g per 100 g
+- Egg white: high biological value, 6 g per egg
+- Cottage cheese (casein): 18 g per 100 g
+
+**Plant sources:**
+- Lentils: 24 g per 100 g
+- Soy tofu: 8 g per 100 g
+(Vegetarians need to combine sources to obtain a complete amino acid profile).
+
+### Absorption Kinetics
+
+Studies show that distributing daily protein intake into 25-40 g portions maximizes the stimulating effect on MPS. The claim of a "30-gram absorption limit per meal" is not supported by modern metabolic research, though even distribution throughout the day remains the optimal strategy.`
+    },
+    {
+        id: "nutrition",
+        title: "Nutrition and Dietetics",
+        description: "Biochemical role of micro and macronutrients. Fundamental principles of building a long-term diet.",
+        imageUrl: "/articles/article_nutrition_1769947792368.png",
+        emoji: "PFC",
+        color: "from-purple-500/80",
+        content: `## Fundamental Dietary Principles
+
+Balanced nutrition is based on providing the body with all necessary chemical elements to maintain endocrine and cellular health without extreme restrictions.
+
+### Macronutrient Structure
+
+**Proteins (4 kcal/g)**
+Responsible for structural cell repair and enzyme synthesis. Provide a high satiety index, critical during caloric restriction. Recommended quota: 25-35% of daily energy.
+
+**Lipids (9 kcal/g)**
+Essential for steroid hormone synthesis, cell membrane components, and fat-soluble vitamin absorption. Minimize artificial trans fats, emphasizing monounsaturated and polyunsaturated fatty acids (Omega-3). Quota: 25-35%.
+
+**Carbohydrates (4 kcal/g)**
+Primary vector for supplying glucose to the CNS and muscle tissues. Complex polysaccharides with a low glycemic index are recommended to prevent sharp insulin fluctuations. Quota: 30-50%.
+
+### Plate Method
+
+For empirical portion control, use the plate rule:
+- 50% of portion volume: fiber (non-starchy vegetables).
+- 25% of portion volume: protein structures.
+- 25% of portion volume: polysaccharides (grains, legumes).
+
+### Clinical Recommendations
+
+- Minimize free sugars: less than 25 g per day to prevent insulin resistance.
+- Dietary fiber intake: 25-35 g per day for gut microbiota modulation.
+- Exclude ethanol, as it has pronounced toxicity and inhibits lipid metabolism.`
+    },
+    {
+        id: "fasting",
+        title: "Intermittent Feeding Window",
+        description: "Autophagy and insulin resistance mechanisms. Clinical review of intermittent fasting.",
+        imageUrl: "/articles/article_fasting_1769947807036.png",
+        emoji: "⏱️",
+        color: "from-orange-500/80",
+        content: `## Intermittent Fasting
+
+Intermittent fasting is a chrono-nutrition protocol that restricts food intake timing to optimize circadian rhythms and metabolic markers.
+
+### Proven Protocols
+
+**16/8 Protocol**
+Includes 16 hours of complete caloric abstinence and an 8-hour eating window (e.g., 12:00 to 20:00). It is the most studied in clinical practice.
+
+**20/4 Protocol**
+A more aggressive form that induces deep glycogen depletion.
+
+### Metabolic Changes
+
+- **12-18 hours**: Hepatic glycogen depletion begins, ketogenesis activates.
+- **18-24 hours**: Sharp decrease in insulin secretion; potential stimulation of autophagy (the cellular recycling process of defective organelles).
+- **24+ hours**: Maximum mobilization of fatty acids from adipocytes.
+
+### Physiological Benefits
+
+Documented effects include increased cellular insulin receptor sensitivity, reduced oxidative stress levels, and potential optimization of overall energy balance control.
+
+### Contraindications
+
+This regimen is not recommended during:
+- Pregnancy and lactation.
+- History of eating disorders.
+- Type 1 diabetes (risk of hypoglycemia).
+- Biliary tract diseases in acute phase.
+
+When starting the protocol, gradual reduction of the eating window and adequate hydration with zero-calorie beverages is recommended.`
+    },
+    {
+        id: "sleep",
+        title: "Circadian Rhythms and Sleep",
+        description: "Neuroendocrine changes during sleep. Impact of sleep deprivation on lipolysis and somatotropin secretion.",
+        imageUrl: "/articles/article_sleep.png",
+        emoji: "🧠",
+        color: "from-indigo-500/80",
+        content: `## Sleep as a Metabolic Regulator
+
+Chronic sleep deprivation is one of the strongest risk factors for metabolic syndrome. Lack of quality recovery completely negates the results of diet therapy.
+
+### Hormonal Imbalance During Sleep Deprivation
+
+**Appetite Modulation:**
+Sleep deficiency over even a few nights leads to a 15% increase in ghrelin levels (appetite-stimulating hormone) and an equivalent decrease in leptin levels (satiety factor). This provokes hypercaloric behavior.
+
+**Tissue Synthesis:**
+Peak secretion of somatotropic hormone (growth hormone), responsible for muscle tissue regeneration, occurs during deep slow-wave sleep. When sleep architecture is disrupted, protein synthesis is suppressed, leading to muscle tissue utilization instead of fat during energy deficit.
+
+### Clinical Sleep Norms
+
+To maintain homeostasis, an adult requires 7 to 9 hours of sleep per day. Sleep quality (percentage ratio of REM and NREM phases) is equally important as duration.
+
+### Sleep Hygiene Protocols
+
+**Environment Optimization:**
+- Maintain bedroom air temperature at 18-20 degrees Celsius.
+- Absolute minimization of light pollution for melatonin synthesis.
+- Exclude blue light spectrum exposure from electronic device displays 60-90 minutes before sleep.
+
+**Behavioral Restrictions:**
+- Caffeine half-life is approximately 5 hours. Avoid consumption in the second half of the day.
+- Intense strength and aerobic training should be completed at least 3 hours before sleep to reduce sympathetic nervous system activity.`
+    }
+];
+
+const articlesMap: Record<Locale, Article[]> = {
+    ru: articlesRu,
+    uk: articlesUk,
+    en: articlesEn,
+};
+
+export function getArticles(locale: Locale): Article[] {
+    return articlesMap[locale] || articlesRu;
+}
+
+// Default export for backward compatibility
+export const articles = articlesRu;
