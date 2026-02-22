@@ -7,7 +7,6 @@ import { useLocale } from "@/lib/LocaleContext";
 
 const navItems = [
     { href: "/", icon: Home, labelKey: "nav.dashboard", width: "w-[85px] sm:w-[95px]" },
-    { href: "/scanner", icon: Camera, labelKey: "nav.scanner", width: "w-[80px] sm:w-[90px]" },
     { href: "/history", icon: Clock, labelKey: "nav.history", width: "w-[80px] sm:w-[90px]" },
     { href: "/recommendations", icon: BookOpen, labelKey: "nav.recommendations", width: "w-[85px] sm:w-[95px]" },
     { href: "/settings", icon: Settings, labelKey: "nav.settings", width: "w-[80px] sm:w-[90px]" },

@@ -7,7 +7,6 @@ import { useLocale } from "@/lib/LocaleContext";
 
 const navItems = [
     { href: "/", icon: Home, labelKey: "nav.dashboard" },
-    { href: "/scanner", icon: Camera, labelKey: "nav.scanner" },
     { href: "/history", icon: Clock, labelKey: "nav.history" },
     { href: "/recommendations", icon: BookOpen, labelKey: "nav.recommendations" },
     { href: "/settings", icon: Settings, labelKey: "nav.settings" },
