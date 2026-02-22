@@ -121,7 +121,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             .eq("id", user.id);
 
         if (!error) {
-            setProfile(prev => prev ? { ...prev, ...updates } : null);
+            // Re-fetch from DB to ensure React state matches what was actually saved
+            await fetchProfile(user.id, user.email);
+        } else {
+            console.error("Error updating profile:", error);
         }
     };
 

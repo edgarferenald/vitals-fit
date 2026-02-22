@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocale } from "@/lib/LocaleContext";
@@ -26,6 +26,15 @@ export default function GoalModal({
 }: GoalModalProps) {
     const [value, setValue] = useState(currentValue);
     const { t } = useLocale();
+
+    // Sync internal value with currentValue whenever modal opens
+    // This fixes the bug where value was stuck at initial mount-time value
+    // (profile was null → fallback 2000) even after real profile loaded
+    useEffect(() => {
+        if (isOpen) {
+            setValue(currentValue);
+        }
+    }, [isOpen, currentValue]);
 
     const handleSave = () => {
         onSave(value);
