@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 Не включай форматирование markdown. Только чистый JSON.`;
 
         // Define primary and fallback models
-        const modelsToTry = ["google/gemini-2.5-flash", "openai/gpt-4o"];
+        const modelsToTry = ["google/gemini-2.5-flash", "google/gemini-2.0-flash-001", "openai/gpt-4o"];
         let responseText = null;
         let lastError = null;
         let lastStatus = 500;
