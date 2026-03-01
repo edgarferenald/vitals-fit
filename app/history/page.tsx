@@ -122,7 +122,7 @@ export default function HistoryPage() {
                                 </div>
                             </GlassCard>
                         ))}
-                        <p className="text-center text-xs text-gray-500 mt-2">← здесь будет твоя еда</p>
+                        <p className="text-center text-xs text-gray-500 mt-2">← {t("history.previewHint")}</p>
                     </div>
                 </div>
 

@@ -75,6 +75,7 @@ export const translations: Record<Locale, Record<string, string>> = {
         "history.p": "Б",
         "history.f": "Ж",
         "history.c": "У",
+        "history.previewHint": "здесь будет твоя еда",
 
         // Recommendations
         "recommendations.title": "Рекомендации",
@@ -265,6 +266,7 @@ export const translations: Record<Locale, Record<string, string>> = {
         "history.p": "Б",
         "history.f": "Ж",
         "history.c": "В",
+        "history.previewHint": "тут буде твоя їжа",
 
         // Recommendations
         "recommendations.title": "Рекомендації",
@@ -455,6 +457,7 @@ export const translations: Record<Locale, Record<string, string>> = {
         "history.p": "P",
         "history.f": "F",
         "history.c": "C",
+        "history.previewHint": "your food will appear here",
 
         // Recommendations
         "recommendations.title": "Recommendations",
