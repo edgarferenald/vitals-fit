@@ -172,7 +172,7 @@ export const translations: Record<Locale, Record<string, string>> = {
 
         // AI Daily Analysis
         "ai.dailyTitle": "AI Анализ дня",
-        "ai.dailyDesc": "Gemini проанализирует ваш рацион",
+        "ai.dailyDesc": "Проанализирует ваш рацион",
         "ai.analyzing": "Анализирую ваш рацион...",
         "ai.noData": "Пока нет данных для анализа. Добавьте еду в дневник.",
         "ai.error": "Не удалось получить анализ. Попробуйте позже.",
@@ -362,7 +362,7 @@ export const translations: Record<Locale, Record<string, string>> = {
 
         // AI Daily Analysis
         "ai.dailyTitle": "AI Аналіз дня",
-        "ai.dailyDesc": "Gemini проаналізує ваш раціон",
+        "ai.dailyDesc": "Проаналізує ваш раціон",
         "ai.analyzing": "Аналізую ваш раціон...",
         "ai.noData": "Поки немає даних для аналізу. Додайте їжу до щоденника.",
         "ai.error": "Не вдалося отримати аналіз. Спробуйте пізніше.",
@@ -552,7 +552,7 @@ export const translations: Record<Locale, Record<string, string>> = {
 
         // AI Daily Analysis
         "ai.dailyTitle": "AI Day Analysis",
-        "ai.dailyDesc": "Gemini will analyze your diet",
+        "ai.dailyDesc": "Will analyze your diet",
         "ai.analyzing": "Analyzing your diet...",
         "ai.noData": "No data to analyze yet. Add food to your diary.",
         "ai.error": "Could not get analysis. Try again later.",
