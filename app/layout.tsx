@@ -86,7 +86,7 @@ export default function RootLayout({
                                     if (s) {
                                         s.style.opacity = '0';
                                         s.style.visibility = 'hidden';
-                                        setTimeout(function() { s.remove(); }, 500);
+                                        setTimeout(function() { s.style.display = 'none'; }, 500);
                                     }
                                 }, 600);
                             });
