@@ -19,7 +19,7 @@ export async function getActiveStreak(userId: string): Promise<Streak | null> {
         .eq("is_active", true)
         .order("created_at", { ascending: false })
         .limit(1)
-        .single();
+        .maybeSingle();
 
     if (error) {
         // No active streak is not an error

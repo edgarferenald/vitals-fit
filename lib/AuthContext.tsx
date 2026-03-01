@@ -47,23 +47,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             .from("users")
             .select("*")
             .eq("id", userId)
-            .single();
+            .maybeSingle();
 
         if (error) {
             console.error("Error fetching profile:", error);
-            // Profile might not exist yet (no trigger), create it
-            if (error.code === "PGRST116") {
-                const { data: newProfile, error: insertError } = await supabase
-                    .from("users")
-                    .insert({ id: userId, email: userEmail ?? null })
-                    .select()
-                    .single();
+            return;
+        }
 
-                if (!insertError && newProfile) {
-                    setProfile(newProfile as UserProfile);
-                } else if (insertError) {
-                    console.error("Error creating profile:", insertError);
-                }
+        // Profile might not exist yet (no trigger), create it
+        if (!data) {
+            const { data: newProfile, error: insertError } = await supabase
+                .from("users")
+                .insert({ id: userId, email: userEmail ?? null })
+                .select()
+                .single();
+
+            if (!insertError && newProfile) {
+                setProfile(newProfile as UserProfile);
+            } else if (insertError) {
+                console.error("Error creating profile:", insertError);
             }
             return;
         }
