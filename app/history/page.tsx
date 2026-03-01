@@ -9,6 +9,7 @@ import { getFoodHistory, deleteFoodEntry, FoodEntry } from "@/lib/foodService";
 import GlassCard from "@/components/ui/GlassCard";
 import Header from "@/components/ui/Header";
 import AuthForm from "@/components/auth/AuthForm";
+import PageTransition from "@/components/ui/PageTransition";
 import { Trash2, Utensils } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -74,7 +75,7 @@ export default function HistoryPage() {
     };
 
     return (
-        <div className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen">
+        <PageTransition className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen">
             <Header />
 
             <h2 className="text-lg font-bold text-white">{t("history.title")}</h2>
@@ -169,6 +170,6 @@ export default function HistoryPage() {
                         ))}
                 </div>
             )}
-        </div>
+        </PageTransition>
     );
 }

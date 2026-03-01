@@ -202,6 +202,32 @@ export default function Calculator() {
                                     </p>
                                 </div>
 
+                                {/* BMI */}
+                                <div className="col-span-2 p-4 rounded-xl bg-gradient-to-r from-neon-yellow/10 to-transparent border border-neon-yellow/30">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-2xl">⚖️</span>
+                                            <div>
+                                                <p className="text-xs text-gray-400">{t("calc.bmi")}</p>
+                                                <p className="text-2xl font-bold font-orbitron text-white">
+                                                    {result.bmi}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${result.bmiCategory === "bmi.normal"
+                                                ? "bg-neon-green/20 text-neon-green"
+                                                : result.bmiCategory === "bmi.underweight"
+                                                    ? "bg-neon-blue/20 text-neon-blue"
+                                                    : "bg-neon-pink/20 text-neon-pink"
+                                            }`}>
+                                            {t(result.bmiCategory)}
+                                        </span>
+                                    </div>
+                                    <p className="text-xs text-gray-500 mt-2">
+                                        {t("calc.idealWeight")}: {result.idealWeight.min}-{result.idealWeight.max} {t("calc.kg")}
+                                    </p>
+                                </div>
+
                                 {/* Water */}
                                 <div className="p-4 rounded-xl bg-gradient-to-r from-neon-blue/10 to-transparent border border-neon-blue/30">
                                     <Droplets className="w-6 h-6 text-neon-blue mb-2" />

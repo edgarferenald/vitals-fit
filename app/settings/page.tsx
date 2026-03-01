@@ -9,10 +9,13 @@ import AuthForm from "@/components/auth/AuthForm";
 import GlassCard from "@/components/ui/GlassCard";
 import GoalModal from "@/components/ui/GoalModal";
 import Header from "@/components/ui/Header";
-import { User, Droplets, Flame, LogOut, Trash2, Edit2, Check } from "lucide-react";
+import PageTransition from "@/components/ui/PageTransition";
+import { Droplets, Flame, LogOut, Edit2, Check, Download, FileText } from "lucide-react";
 import { updateWaterGoal } from "@/lib/waterService";
 import { updateCalorieGoal } from "@/lib/foodService";
 import { getStreakHistory, deleteStreak } from "@/lib/streakService";
+import { exportToCSV, exportToPDF } from "@/lib/exportService";
+import { Trash2 } from "lucide-react";
 
 export default function SettingsPage() {
     const { user, profile, signOut, refreshProfile, updateProfile } = useAuth();
@@ -23,6 +26,7 @@ export default function SettingsPage() {
     const [showStreaks, setShowStreaks] = useState(false);
     const [isEditingName, setIsEditingName] = useState(false);
     const [newName, setNewName] = useState("");
+    const [exporting, setExporting] = useState<string | null>(null);
 
     const handleWaterGoalSave = async (goal: number) => {
         if (!user) return;
@@ -59,6 +63,18 @@ export default function SettingsPage() {
         setIsEditingName(false);
     };
 
+    const handleExportCSV = async () => {
+        if (!user) return;
+        setExporting("csv");
+        try { await exportToCSV(user.id); } finally { setExporting(null); }
+    };
+
+    const handleExportPDF = async () => {
+        if (!user) return;
+        setExporting("pdf");
+        try { await exportToPDF(user.id); } finally { setExporting(null); }
+    };
+
     if (!user) {
         return (
             <div className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen">
@@ -71,15 +87,15 @@ export default function SettingsPage() {
     }
 
     return (
-        <div className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen">
+        <PageTransition className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen">
             <Header />
 
             {/* Profile Card */}
             <GlassCard className="flex items-center gap-4 p-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-neon-green via-neon-blue to-neon-pink p-[2px]">
-                    <div className="w-full h-full rounded-full bg-black flex items-center justify-center">
-                        <User className="w-6 h-6 text-white" />
-                    </div>
+                <div className="w-16 h-16 rounded-full bg-neon-green/10 border-2 border-neon-green/30 flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl text-neon-green font-bold">
+                        {(profile?.display_name || user.email || "?").charAt(0).toUpperCase()}
+                    </span>
                 </div>
                 <div className="flex-1">
                     {isEditingName ? (
@@ -138,6 +154,32 @@ export default function SettingsPage() {
                     <span className="text-lg font-orbitron text-neon-pink">{profile?.calorie_goal || 2500} {t("calories.kcal")}</span>
                 </GlassCard>
             </button>
+
+            {/* Export Section */}
+            <h2 className="text-sm text-gray-400 uppercase tracking-wider mt-2">{t("settings.export")}</h2>
+
+            <div className="grid grid-cols-2 gap-3">
+                <button onClick={handleExportCSV} disabled={!!exporting}>
+                    <GlassCard className="flex items-center gap-3 p-4 hover:border-neon-green/50 transition-colors">
+                        <Download className="w-5 h-5 text-neon-green" />
+                        <div className="text-left">
+                            <h3 className="text-sm font-bold text-white">CSV</h3>
+                            <p className="text-[10px] text-gray-400">{t("settings.exportFood")}</p>
+                        </div>
+                        {exporting === "csv" && <div className="animate-spin w-4 h-4 border-2 border-neon-green border-t-transparent rounded-full ml-auto" />}
+                    </GlassCard>
+                </button>
+                <button onClick={handleExportPDF} disabled={!!exporting}>
+                    <GlassCard className="flex items-center gap-3 p-4 hover:border-neon-pink/50 transition-colors">
+                        <FileText className="w-5 h-5 text-neon-pink" />
+                        <div className="text-left">
+                            <h3 className="text-sm font-bold text-white">PDF</h3>
+                            <p className="text-[10px] text-gray-400">{t("settings.exportFood")}</p>
+                        </div>
+                        {exporting === "pdf" && <div className="animate-spin w-4 h-4 border-2 border-neon-pink border-t-transparent rounded-full ml-auto" />}
+                    </GlassCard>
+                </button>
+            </div>
 
             {/* Streak History */}
             <h2 className="text-sm text-gray-400 uppercase tracking-wider mt-2">{t("settings.streaks")}</h2>
@@ -206,6 +248,6 @@ export default function SettingsPage() {
                 onSave={handleCalorieGoalSave}
                 presets={[1500, 2000, 2500, 3000]}
             />
-        </div>
+        </PageTransition>
     );
 }

@@ -5,6 +5,7 @@ import Header from "@/components/ui/Header";
 import Calculator from "@/components/recommendations/Calculator";
 import ArticleCard from "@/components/recommendations/ArticleCard";
 import ArticleModal from "@/components/recommendations/ArticleModal";
+import PageTransition from "@/components/ui/PageTransition";
 import { getArticles, Article } from "@/lib/articlesData";
 import { useLocale } from "@/lib/LocaleContext";
 
@@ -14,7 +15,7 @@ export default function RecommendationsPage() {
     const localizedArticles = getArticles(locale);
 
     return (
-        <div className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen overflow-auto pb-6">
+        <PageTransition className="flex flex-col gap-3 p-3 sm:p-6 min-h-screen overflow-auto pb-6">
             <Header />
 
             <h2 className="text-lg font-bold text-white">{t("recommendations.title")}</h2>
@@ -43,6 +44,6 @@ export default function RecommendationsPage() {
                     onClose={() => setSelectedArticle(null)}
                 />
             )}
-        </div>
+        </PageTransition>
     );
 }

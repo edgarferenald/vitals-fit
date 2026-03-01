@@ -21,6 +21,9 @@ export interface CalculationResult {
     protein: number; // g
     fat: number; // g
     carbs: number; // g
+    bmi: number;
+    bmiCategory: string;
+    idealWeight: { min: number; max: number };
 }
 
 const activityMultipliers: Record<ActivityLevel, number> = {
@@ -102,19 +105,45 @@ export function calculateMacros(targetCalories: number, goal: Goal): { protein: 
     };
 }
 
+export function calculateBMI(weight: number, height: number): number {
+    const heightM = height / 100;
+    return Math.round((weight / (heightM * heightM)) * 10) / 10;
+}
+
+export function getBMICategory(bmi: number): string {
+    if (bmi < 18.5) return "bmi.underweight";
+    if (bmi < 25) return "bmi.normal";
+    if (bmi < 30) return "bmi.overweight";
+    return "bmi.obese";
+}
+
+export function getIdealWeight(height: number): { min: number; max: number } {
+    const heightM = height / 100;
+    return {
+        min: Math.round(18.5 * heightM * heightM),
+        max: Math.round(24.9 * heightM * heightM),
+    };
+}
+
 export function calculate(params: UserParams): CalculationResult {
     const bmr = calculateBMR(params.gender, params.weight, params.height, params.age);
     const tdee = calculateTDEE(bmr, params.activityLevel);
     const targetCalories = calculateTargetCalories(tdee, params.goal);
     const water = calculateWater(params.weight);
     const macros = calculateMacros(targetCalories, params.goal);
+    const bmi = calculateBMI(params.weight, params.height);
+    const bmiCategory = getBMICategory(bmi);
+    const idealWeight = getIdealWeight(params.height);
 
     return {
         bmr,
         tdee,
         targetCalories,
         water,
-        ...macros
+        ...macros,
+        bmi,
+        bmiCategory,
+        idealWeight,
     };
 }
 

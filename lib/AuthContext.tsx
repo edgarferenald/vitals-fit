@@ -8,9 +8,17 @@ interface UserProfile {
     id: string;
     email: string | null;
     display_name: string | null;
+    avatar_url: string | null;
     water_goal_ml: number;
     calorie_goal: number;
     streak_count: number;
+    onboarding_completed: boolean;
+    gender: string | null;
+    age: number | null;
+    weight_kg: number | null;
+    height_cm: number | null;
+    activity_level: string | null;
+    goal: string | null;
 }
 
 interface AuthContextType {

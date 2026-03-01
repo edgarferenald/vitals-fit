@@ -13,6 +13,7 @@ export const translations: Record<Locale, Record<string, string>> = {
         "nav.history": "История",
         "nav.recommendations": "Советы",
         "nav.settings": "Профиль",
+        "nav.achievements": "Награды",
 
         // Auth
         "auth.login": "Вход",
@@ -55,6 +56,8 @@ export const translations: Record<Locale, Record<string, string>> = {
         "calories.goalUnit": "килокалорий в день",
 
         // Scanner
+        "scanner.title": "Сканер Еды",
+        "scanner.ready": "AI Анализ Готов",
         "scanner.error": "Не удалось распознать. Попробуйте снова.",
         "scanner.energy": "Энергия",
         "scanner.protein": "Белки",
@@ -97,6 +100,15 @@ export const translations: Record<Locale, Record<string, string>> = {
         "calc.protein": "Белок",
         "calc.carbs": "Углеводы",
         "calc.fat": "Жиры",
+        "calc.bmi": "ИМТ (BMI)",
+        "calc.idealWeight": "Идеальный вес",
+        "calc.kg": "кг",
+
+        // BMI categories
+        "bmi.underweight": "Дефицит",
+        "bmi.normal": "Норма",
+        "bmi.overweight": "Избыток",
+        "bmi.obese": "Ожирение",
 
         // Activity labels
         "activity.sedentary": "Минимальная (офис)",
@@ -124,9 +136,62 @@ export const translations: Record<Locale, Record<string, string>> = {
         "settings.active": "активна",
         "settings.logout": "Выйти",
         "settings.save": "Сохранить",
+        "settings.export": "Экспорт данных",
+        "settings.exportFood": "История еды",
 
-        // AI prompt language
+        // Progress Chart
+        "progress.title": "Прогресс",
+        "progress.last7days": "Последние 7 дней",
+        "progress.loginToView": "Войдите для просмотра",
+
+        // Streak Calendar
+        "calendar.title": "Активность",
+        "calendar.weeks12": "12 недель",
+        "calendar.actions": "действий",
+        "calendar.less": "Меньше",
+        "calendar.more": "Больше",
+
+        // Achievements
+        "achievements.title": "Достижения",
+        "badge.streak7.title": "7 дней подряд",
+        "badge.streak7.desc": "Серия 7 дней без перерыва",
+        "badge.streak30.title": "Месяц силы",
+        "badge.streak30.desc": "Серия 30 дней подряд",
+        "badge.water10k.title": "Водный поток",
+        "badge.water10k.desc": "10 000 мл воды за неделю",
+        "badge.firstScan.title": "Первый скан",
+        "badge.firstScan.desc": "Первое сканирование еды",
+        "badge.food100.title": "Гурман",
+        "badge.food100.desc": "100 записей еды",
+        "badge.trackerPro.title": "Трекер PRO",
+        "badge.trackerPro.desc": "14 дней с записями",
+        "badge.calorieMaster.title": "Мастер калорий",
+        "badge.calorieMaster.desc": "50 000 ккал отслежено",
+        "badge.hydroWeek.title": "Гидро-неделя",
+        "badge.hydroWeek.desc": "14 000 мл воды за неделю",
+
+        // AI Daily Analysis
+        "ai.dailyTitle": "AI Анализ дня",
+        "ai.dailyDesc": "Gemini проанализирует ваш рацион",
+        "ai.analyzing": "Анализирую ваш рацион...",
+        "ai.noData": "Пока нет данных для анализа. Добавьте еду в дневник.",
+        "ai.error": "Не удалось получить анализ. Попробуйте позже.",
         "ai.language": "РУССКОМ",
+
+        // Onboarding
+        "onboarding.welcome": "Настроим под тебя",
+        "onboarding.stepGoal": "Твоя цель",
+        "onboarding.stepBody": "Параметры тела",
+        "onboarding.stepActivity": "Уровень активности",
+        "onboarding.stepReady": "Всё готово!",
+        "onboarding.ready": "Мы рассчитали твои персональные нормы",
+        "onboarding.back": "Назад",
+        "onboarding.next": "Далее",
+        "onboarding.start": "Начать",
+        "onboarding.day": "день",
+
+        // Avatar
+        "avatar.tooLarge": "Файл слишком большой. Максимум 2 МБ.",
     },
     uk: {
         // Header
@@ -138,6 +203,7 @@ export const translations: Record<Locale, Record<string, string>> = {
         "nav.history": "Iсторiя",
         "nav.recommendations": "Поради",
         "nav.settings": "Профiль",
+        "nav.achievements": "Нагороди",
 
         // Auth
         "auth.login": "Вхід",
@@ -180,6 +246,8 @@ export const translations: Record<Locale, Record<string, string>> = {
         "calories.goalUnit": "кілокалорій на день",
 
         // Scanner
+        "scanner.title": "Сканер Їжі",
+        "scanner.ready": "AI Аналіз Готовий",
         "scanner.error": "Не вдалося розпізнати. Спробуйте ще раз.",
         "scanner.energy": "Енергія",
         "scanner.protein": "Білки",
@@ -222,6 +290,15 @@ export const translations: Record<Locale, Record<string, string>> = {
         "calc.protein": "Білок",
         "calc.carbs": "Вуглеводи",
         "calc.fat": "Жири",
+        "calc.bmi": "ІМТ (BMI)",
+        "calc.idealWeight": "Ідеальна вага",
+        "calc.kg": "кг",
+
+        // BMI categories
+        "bmi.underweight": "Дефіцит",
+        "bmi.normal": "Норма",
+        "bmi.overweight": "Надлишок",
+        "bmi.obese": "Ожиріння",
 
         // Activity labels
         "activity.sedentary": "Мінімальна (офіс)",
@@ -249,9 +326,62 @@ export const translations: Record<Locale, Record<string, string>> = {
         "settings.active": "активна",
         "settings.logout": "Вийти",
         "settings.save": "Зберегти",
+        "settings.export": "Експорт даних",
+        "settings.exportFood": "Історія їжі",
 
-        // AI prompt language
+        // Progress Chart
+        "progress.title": "Прогрес",
+        "progress.last7days": "Останні 7 днів",
+        "progress.loginToView": "Увійдіть для перегляду",
+
+        // Streak Calendar
+        "calendar.title": "Активність",
+        "calendar.weeks12": "12 тижнів",
+        "calendar.actions": "дій",
+        "calendar.less": "Менше",
+        "calendar.more": "Більше",
+
+        // Achievements
+        "achievements.title": "Досягнення",
+        "badge.streak7.title": "7 днів поспіль",
+        "badge.streak7.desc": "Серія 7 днів без перерви",
+        "badge.streak30.title": "Місяць сили",
+        "badge.streak30.desc": "Серія 30 днів поспіль",
+        "badge.water10k.title": "Водний потік",
+        "badge.water10k.desc": "10 000 мл води за тиждень",
+        "badge.firstScan.title": "Перший скан",
+        "badge.firstScan.desc": "Перше сканування їжі",
+        "badge.food100.title": "Гурман",
+        "badge.food100.desc": "100 записів їжі",
+        "badge.trackerPro.title": "Трекер PRO",
+        "badge.trackerPro.desc": "14 днів із записами",
+        "badge.calorieMaster.title": "Майстер калорій",
+        "badge.calorieMaster.desc": "50 000 ккал відстежено",
+        "badge.hydroWeek.title": "Гідро-тиждень",
+        "badge.hydroWeek.desc": "14 000 мл води за тиждень",
+
+        // AI Daily Analysis
+        "ai.dailyTitle": "AI Аналіз дня",
+        "ai.dailyDesc": "Gemini проаналізує ваш раціон",
+        "ai.analyzing": "Аналізую ваш раціон...",
+        "ai.noData": "Поки немає даних для аналізу. Додайте їжу до щоденника.",
+        "ai.error": "Не вдалося отримати аналіз. Спробуйте пізніше.",
         "ai.language": "УКРАЇНСЬКОЮ",
+
+        // Onboarding
+        "onboarding.welcome": "Налаштуємо під тебе",
+        "onboarding.stepGoal": "Твоя ціль",
+        "onboarding.stepBody": "Параметри тіла",
+        "onboarding.stepActivity": "Рівень активності",
+        "onboarding.stepReady": "Все готово!",
+        "onboarding.ready": "Ми розрахували твої персональні норми",
+        "onboarding.back": "Назад",
+        "onboarding.next": "Далі",
+        "onboarding.start": "Почати",
+        "onboarding.day": "день",
+
+        // Avatar
+        "avatar.tooLarge": "Файл занадто великий. Максимум 2 МБ.",
     },
     en: {
         // Header
@@ -263,6 +393,7 @@ export const translations: Record<Locale, Record<string, string>> = {
         "nav.history": "History",
         "nav.recommendations": "Tips",
         "nav.settings": "Profile",
+        "nav.achievements": "Awards",
 
         // Auth
         "auth.login": "Login",
@@ -305,6 +436,8 @@ export const translations: Record<Locale, Record<string, string>> = {
         "calories.goalUnit": "kilocalories per day",
 
         // Scanner
+        "scanner.title": "Food Scanner",
+        "scanner.ready": "AI Analysis Ready",
         "scanner.error": "Could not recognize. Try again.",
         "scanner.energy": "Energy",
         "scanner.protein": "Protein",
@@ -347,6 +480,15 @@ export const translations: Record<Locale, Record<string, string>> = {
         "calc.protein": "Protein",
         "calc.carbs": "Carbs",
         "calc.fat": "Fat",
+        "calc.bmi": "BMI",
+        "calc.idealWeight": "Ideal weight",
+        "calc.kg": "kg",
+
+        // BMI categories
+        "bmi.underweight": "Underweight",
+        "bmi.normal": "Normal",
+        "bmi.overweight": "Overweight",
+        "bmi.obese": "Obese",
 
         // Activity labels
         "activity.sedentary": "Minimal (office)",
@@ -374,8 +516,61 @@ export const translations: Record<Locale, Record<string, string>> = {
         "settings.active": "active",
         "settings.logout": "Logout",
         "settings.save": "Save",
+        "settings.export": "Data Export",
+        "settings.exportFood": "Food history",
 
-        // AI prompt language
+        // Progress Chart
+        "progress.title": "Progress",
+        "progress.last7days": "Last 7 days",
+        "progress.loginToView": "Log in to view",
+
+        // Streak Calendar
+        "calendar.title": "Activity",
+        "calendar.weeks12": "12 weeks",
+        "calendar.actions": "actions",
+        "calendar.less": "Less",
+        "calendar.more": "More",
+
+        // Achievements
+        "achievements.title": "Achievements",
+        "badge.streak7.title": "7 Day Streak",
+        "badge.streak7.desc": "7 consecutive days streak",
+        "badge.streak30.title": "Month of Power",
+        "badge.streak30.desc": "30 consecutive days streak",
+        "badge.water10k.title": "Water Flow",
+        "badge.water10k.desc": "10,000 ml water in a week",
+        "badge.firstScan.title": "First Scan",
+        "badge.firstScan.desc": "First food scan",
+        "badge.food100.title": "Gourmet",
+        "badge.food100.desc": "100 food entries",
+        "badge.trackerPro.title": "Tracker PRO",
+        "badge.trackerPro.desc": "14 days with entries",
+        "badge.calorieMaster.title": "Calorie Master",
+        "badge.calorieMaster.desc": "50,000 kcal tracked",
+        "badge.hydroWeek.title": "Hydro Week",
+        "badge.hydroWeek.desc": "14,000 ml water in a week",
+
+        // AI Daily Analysis
+        "ai.dailyTitle": "AI Day Analysis",
+        "ai.dailyDesc": "Gemini will analyze your diet",
+        "ai.analyzing": "Analyzing your diet...",
+        "ai.noData": "No data to analyze yet. Add food to your diary.",
+        "ai.error": "Could not get analysis. Try again later.",
         "ai.language": "ENGLISH",
+
+        // Onboarding
+        "onboarding.welcome": "Let's set up for you",
+        "onboarding.stepGoal": "Your goal",
+        "onboarding.stepBody": "Body parameters",
+        "onboarding.stepActivity": "Activity level",
+        "onboarding.stepReady": "All set!",
+        "onboarding.ready": "We calculated your personal norms",
+        "onboarding.back": "Back",
+        "onboarding.next": "Next",
+        "onboarding.start": "Start",
+        "onboarding.day": "day",
+
+        // Avatar
+        "avatar.tooLarge": "File is too large. Maximum 2 MB.",
     }
 };

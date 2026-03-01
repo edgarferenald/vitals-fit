@@ -1,13 +1,14 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Home, Camera, Clock, BookOpen, Settings } from "lucide-react";
+import { Home, Clock, BookOpen, Trophy, Settings } from "lucide-react";
 import Link from "next/link";
 import { useLocale } from "@/lib/LocaleContext";
 
 const navItems = [
     { href: "/", icon: Home, labelKey: "nav.dashboard" },
     { href: "/history", icon: Clock, labelKey: "nav.history" },
+    { href: "/achievements", icon: Trophy, labelKey: "nav.achievements" },
     { href: "/recommendations", icon: BookOpen, labelKey: "nav.recommendations" },
     { href: "/settings", icon: Settings, labelKey: "nav.settings" },
 ];
