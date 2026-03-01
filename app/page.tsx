@@ -34,36 +34,36 @@ export default function Home() {
   }
 
   return (
-    <PageTransition className="flex flex-col gap-3 p-3 sm:p-6 h-full overflow-auto pb-6">
+    <PageTransition className="flex flex-col gap-4 p-4 sm:p-6 lg:p-8 h-full overflow-auto pb-8">
       <Header />
 
       {/* Main Dashboard */}
-      <div className="flex flex-col gap-3 sm:gap-4 lg:gap-6">
+      <div className="flex flex-col gap-4 sm:gap-6 lg:gap-8">
 
         {/* Top 3 Widgets - Equal Height */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 auto-rows-fr">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 auto-rows-fr">
           <StreakWidget />
           <WaterWidget />
           <CalorieWidget />
         </div>
 
+        {/* Food Scanner - Right under Calories */}
+        <div className="p-6 sm:p-8 rounded-2xl border border-neon-green/30 bg-neon-green/5 flex flex-col items-center justify-center gap-4 sm:gap-5">
+          <div className="text-center">
+            <span className="block text-lg sm:text-2xl lg:text-3xl text-white font-bold uppercase tracking-wider">{t("scanner.title")}</span>
+            <span className="text-sm sm:text-base text-neon-green">{t("scanner.ready")}</span>
+          </div>
+          <FoodScanner />
+        </div>
+
         {/* Progress Chart */}
         <ProgressChart />
-
-        {/* AI Daily Analysis */}
-        <AIDailyAnalysis />
 
         {/* Streak Calendar */}
         <StreakCalendar />
 
-        {/* Food Scanner - Full Width */}
-        <div className="p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-neon-green/30 bg-neon-green/5 flex flex-col items-center justify-center gap-3 sm:gap-4">
-          <div className="text-center">
-            <span className="block text-base sm:text-2xl text-white font-bold uppercase tracking-wider">{t("scanner.title")}</span>
-            <span className="text-xs sm:text-sm text-neon-green">{t("scanner.ready")}</span>
-          </div>
-          <FoodScanner />
-        </div>
+        {/* AI Daily Analysis - At the very bottom */}
+        <AIDailyAnalysis />
       </div>
 
       {/* Decorative Background */}
