@@ -2,12 +2,13 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Home, Camera, Clock, BookOpen, Settings } from "lucide-react";
+import { Home, Camera, Clock, BookOpen, Trophy, Settings } from "lucide-react";
 import { useLocale } from "@/lib/LocaleContext";
 
 const navItems = [
     { href: "/", icon: Home, labelKey: "nav.dashboard", width: "w-[85px] sm:w-[95px]" },
     { href: "/history", icon: Clock, labelKey: "nav.history", width: "w-[80px] sm:w-[90px]" },
+    { href: "/achievements", icon: Trophy, labelKey: "nav.achievements", width: "w-[85px] sm:w-[95px]" },
     { href: "/recommendations", icon: BookOpen, labelKey: "nav.recommendations", width: "w-[85px] sm:w-[95px]" },
     { href: "/settings", icon: Settings, labelKey: "nav.settings", width: "w-[80px] sm:w-[90px]" },
 ];
