@@ -73,8 +73,8 @@ export default function ProgressChart() {
                 <span className="text-[10px] sm:text-xs text-gray-500">{t("progress.last7days")}</span>
             </div>
 
-            <div className="h-[180px] sm:h-[220px]">
-                <ResponsiveContainer width="100%" height="100%">
+            <div className="h-[180px] sm:h-[220px] min-h-[180px] min-w-0">
+                <ResponsiveContainer width="100%" height="100%" minWidth={100} minHeight={100}>
                     <AreaChart data={data} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
                         <defs>
                             <linearGradient id="gradCalories" x1="0" y1="0" x2="0" y2="1">

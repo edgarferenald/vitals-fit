@@ -137,6 +137,10 @@ export const translations: Record<Locale, Record<string, string>> = {
         "settings.active": "активна",
         "settings.logout": "Выйти",
         "settings.save": "Сохранить",
+        "settings.bodyParams": "Параметры тела",
+        "settings.viewNorms": "Мои нормы",
+        "settings.normsTitle": "Рекомендованные нормы",
+        "settings.perDay": "в день",
         "settings.export": "Экспорт данных",
         "settings.exportFood": "История еды",
 
@@ -328,6 +332,10 @@ export const translations: Record<Locale, Record<string, string>> = {
         "settings.active": "активна",
         "settings.logout": "Вийти",
         "settings.save": "Зберегти",
+        "settings.bodyParams": "Параметри тіла",
+        "settings.viewNorms": "Мої норми",
+        "settings.normsTitle": "Рекомендовані норми",
+        "settings.perDay": "на день",
         "settings.export": "Експорт даних",
         "settings.exportFood": "Історія їжі",
 
@@ -519,6 +527,10 @@ export const translations: Record<Locale, Record<string, string>> = {
         "settings.active": "active",
         "settings.logout": "Logout",
         "settings.save": "Save",
+        "settings.bodyParams": "Body Parameters",
+        "settings.viewNorms": "My Norms",
+        "settings.normsTitle": "Recommended Norms",
+        "settings.perDay": "per day",
         "settings.export": "Data Export",
         "settings.exportFood": "Food history",
 
