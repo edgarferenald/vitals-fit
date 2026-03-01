@@ -106,7 +106,7 @@ export default function AuthForm() {
                 </button>
             </form>
 
-            <p className="text-center text-gray-400 mt-4 text-sm">
+            <div className="text-center text-gray-400 mt-4 text-sm">
                 {isLogin ? t("auth.noAccount") : t("auth.hasAccount")}{" "}
                 <button
                     onClick={() => setIsLogin(!isLogin)}
@@ -114,7 +114,7 @@ export default function AuthForm() {
                 >
                     {isLogin ? t("auth.register") : t("auth.submit.login")}
                 </button>
-            </p>
+            </div>
         </motion.div>
     );
 }

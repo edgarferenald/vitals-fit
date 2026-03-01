@@ -59,18 +59,19 @@ export default function AIDailyAnalysis() {
 
     return (
         <>
-            <button onClick={handleAnalyze} className="w-full group">
-                <GlassCard className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 hover:border-neon-blue/50 transition-all group-hover:shadow-[0_0_20px_rgba(0,240,255,0.15)]">
-                    <div className="p-2 sm:p-3 bg-neon-blue/10 rounded-xl border border-neon-blue/30 group-hover:bg-neon-blue/20 transition-colors">
-                        <BrainCircuit className="w-5 h-5 sm:w-6 sm:h-6 text-neon-blue" />
-                    </div>
-                    <div className="flex-1 text-left">
-                        <h3 className="text-sm sm:text-base font-bold text-white">{t("ai.dailyTitle")}</h3>
-                        <p className="text-[10px] sm:text-xs text-gray-400">{t("ai.dailyDesc")}</p>
-                    </div>
-                    <div className="text-neon-blue text-xl sm:text-2xl font-light">→</div>
-                </GlassCard>
-            </button>
+            <GlassCard
+                onClick={handleAnalyze}
+                className="w-full cursor-pointer flex items-center gap-3 sm:gap-4 p-3 sm:p-4 hover:border-neon-blue/50 transition-all group hover:shadow-[0_0_20px_rgba(0,240,255,0.15)]"
+            >
+                <div className="p-2 sm:p-3 bg-neon-blue/10 rounded-xl border border-neon-blue/30 group-hover:bg-neon-blue/20 transition-colors">
+                    <BrainCircuit className="w-5 h-5 sm:w-6 sm:h-6 text-neon-blue" />
+                </div>
+                <div className="flex-1 text-left">
+                    <h3 className="text-sm sm:text-base font-bold text-white">{t("ai.dailyTitle")}</h3>
+                    <p className="text-[10px] sm:text-xs text-gray-400">{t("ai.dailyDesc")}</p>
+                </div>
+                <div className="text-neon-blue text-xl sm:text-2xl font-light">→</div>
+            </GlassCard>
 
             {/* Analysis Modal */}
             <AnimatePresence>
