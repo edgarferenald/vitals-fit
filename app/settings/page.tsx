@@ -133,65 +133,71 @@ export default function SettingsPage() {
             {/* Goals Section */}
             <h2 className="text-sm text-gray-400 uppercase tracking-wider mt-2">{t("settings.goals")}</h2>
 
-            <button onClick={() => setShowWaterGoal(true)}>
-                <GlassCard className="flex items-center gap-4 p-4 hover:border-neon-blue/50 transition-colors">
-                    <Droplets className="w-6 h-6 text-neon-blue" />
-                    <div className="flex-1 text-left">
-                        <h3 className="font-bold text-white">{t("settings.water")}</h3>
-                        <p className="text-sm text-gray-400">{t("settings.dailyGoal")}</p>
-                    </div>
-                    <span className="text-lg font-orbitron text-neon-blue">{profile?.water_goal_ml || 2000} {t("water.ml")}</span>
-                </GlassCard>
-            </button>
+            <GlassCard
+                onClick={() => setShowWaterGoal(true)}
+                className="flex items-center gap-4 p-4 hover:border-neon-blue/50 transition-colors cursor-pointer"
+            >
+                <Droplets className="w-6 h-6 text-neon-blue" />
+                <div className="flex-1 text-left">
+                    <h3 className="font-bold text-white">{t("settings.water")}</h3>
+                    <p className="text-sm text-gray-400">{t("settings.dailyGoal")}</p>
+                </div>
+                <span className="text-lg font-orbitron text-neon-blue">{profile?.water_goal_ml || 2000} {t("water.ml")}</span>
+            </GlassCard>
 
-            <button onClick={() => setShowCalorieGoal(true)}>
-                <GlassCard className="flex items-center gap-4 p-4 hover:border-neon-pink/50 transition-colors">
-                    <Flame className="w-6 h-6 text-neon-pink" />
-                    <div className="flex-1 text-left">
-                        <h3 className="font-bold text-white">{t("settings.calories")}</h3>
-                        <p className="text-sm text-gray-400">{t("settings.dailyGoal")}</p>
-                    </div>
-                    <span className="text-lg font-orbitron text-neon-pink">{profile?.calorie_goal || 2500} {t("calories.kcal")}</span>
-                </GlassCard>
-            </button>
+            <GlassCard
+                onClick={() => setShowCalorieGoal(true)}
+                className="flex items-center gap-4 p-4 hover:border-neon-pink/50 transition-colors cursor-pointer"
+            >
+                <Flame className="w-6 h-6 text-neon-pink" />
+                <div className="flex-1 text-left">
+                    <h3 className="font-bold text-white">{t("settings.calories")}</h3>
+                    <p className="text-sm text-gray-400">{t("settings.dailyGoal")}</p>
+                </div>
+                <span className="text-lg font-orbitron text-neon-pink">{profile?.calorie_goal || 2500} {t("calories.kcal")}</span>
+            </GlassCard>
 
             {/* Export Section */}
             <h2 className="text-sm text-gray-400 uppercase tracking-wider mt-2">{t("settings.export")}</h2>
 
             <div className="grid grid-cols-2 gap-3">
-                <button onClick={handleExportCSV} disabled={!!exporting}>
-                    <GlassCard className="flex items-center gap-3 p-4 hover:border-neon-green/50 transition-colors">
-                        <Download className="w-5 h-5 text-neon-green" />
-                        <div className="text-left">
-                            <h3 className="text-sm font-bold text-white">CSV</h3>
-                            <p className="text-[10px] text-gray-400">{t("settings.exportFood")}</p>
-                        </div>
-                        {exporting === "csv" && <div className="animate-spin w-4 h-4 border-2 border-neon-green border-t-transparent rounded-full ml-auto" />}
-                    </GlassCard>
-                </button>
-                <button onClick={handleExportPDF} disabled={!!exporting}>
-                    <GlassCard className="flex items-center gap-3 p-4 hover:border-neon-pink/50 transition-colors">
-                        <FileText className="w-5 h-5 text-neon-pink" />
-                        <div className="text-left">
-                            <h3 className="text-sm font-bold text-white">PDF</h3>
-                            <p className="text-[10px] text-gray-400">{t("settings.exportFood")}</p>
-                        </div>
-                        {exporting === "pdf" && <div className="animate-spin w-4 h-4 border-2 border-neon-pink border-t-transparent rounded-full ml-auto" />}
-                    </GlassCard>
-                </button>
+                <GlassCard
+                    onClick={exporting ? undefined : handleExportCSV}
+                    className={`flex items-center gap-3 p-4 hover:border-neon-green/50 transition-colors ${exporting ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                >
+                    <Download className="w-5 h-5 text-neon-green" />
+                    <div className="text-left">
+                        <h3 className="text-sm font-bold text-white">CSV</h3>
+                        <p className="text-[10px] text-gray-400">{t("settings.exportFood")}</p>
+                    </div>
+                    {exporting === "csv" && <div className="animate-spin w-4 h-4 border-2 border-neon-green border-t-transparent rounded-full ml-auto" />}
+                </GlassCard>
+
+                <GlassCard
+                    onClick={exporting ? undefined : handleExportPDF}
+                    className={`flex items-center gap-3 p-4 hover:border-neon-pink/50 transition-colors ${exporting ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+                >
+                    <FileText className="w-5 h-5 text-neon-pink" />
+                    <div className="text-left">
+                        <h3 className="text-sm font-bold text-white">PDF</h3>
+                        <p className="text-[10px] text-gray-400">{t("settings.exportFood")}</p>
+                    </div>
+                    {exporting === "pdf" && <div className="animate-spin w-4 h-4 border-2 border-neon-pink border-t-transparent rounded-full ml-auto" />}
+                </GlassCard>
             </div>
 
             {/* Streak History */}
             <h2 className="text-sm text-gray-400 uppercase tracking-wider mt-2">{t("settings.streaks")}</h2>
 
-            <button onClick={loadStreakHistory}>
-                <GlassCard className="flex items-center gap-4 p-4 hover:border-neon-green/50 transition-colors">
-                    <div className="flex-1 text-left">
-                        <h3 className="font-bold text-white">{t("settings.streakHistory")}</h3>
-                        <p className="text-sm text-gray-400">{t("settings.manageStreaks")}</p>
-                    </div>
-                </GlassCard>
-            </button>
+            <GlassCard
+                onClick={loadStreakHistory}
+                className="flex items-center gap-4 p-4 hover:border-neon-green/50 transition-colors cursor-pointer"
+            >
+                <div className="flex-1 text-left">
+                    <h3 className="font-bold text-white">{t("settings.streakHistory")}</h3>
+                    <p className="text-sm text-gray-400">{t("settings.manageStreaks")}</p>
+                </div>
+            </GlassCard>
 
             {showStreaks && (
                 <div className="space-y-2">
