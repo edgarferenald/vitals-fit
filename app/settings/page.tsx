@@ -10,6 +10,7 @@ import GlassCard from "@/components/ui/GlassCard";
 import GoalModal from "@/components/ui/GoalModal";
 import Header from "@/components/ui/Header";
 import PageTransition from "@/components/ui/PageTransition";
+import BodyVisualizer from "@/components/ui/BodyVisualizer";
 import { Droplets, Flame, LogOut, Edit2, Check, Download, FileText, User, Calculator, X } from "lucide-react";
 import { updateWaterGoal } from "@/lib/waterService";
 import { updateCalorieGoal } from "@/lib/foodService";
@@ -222,8 +223,8 @@ export default function SettingsPage() {
                                     key={g}
                                     onClick={() => setBodyGender(g)}
                                     className={`py-2 rounded-lg text-sm font-bold transition-all ${bodyGender === g
-                                            ? "bg-neon-green/20 text-neon-green border border-neon-green/40"
-                                            : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
+                                        ? "bg-neon-green/20 text-neon-green border border-neon-green/40"
+                                        : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
                                         }`}
                                 >
                                     {t(`calc.${g}`)}
@@ -272,8 +273,8 @@ export default function SettingsPage() {
                                     key={a}
                                     onClick={() => setBodyActivity(a)}
                                     className={`w-full py-2 px-3 rounded-lg text-sm text-left transition-all ${bodyActivity === a
-                                            ? "bg-neon-green/20 text-neon-green border border-neon-green/40"
-                                            : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
+                                        ? "bg-neon-green/20 text-neon-green border border-neon-green/40"
+                                        : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
                                         }`}
                                 >
                                     {t(`activity.${a}`)}
@@ -291,8 +292,8 @@ export default function SettingsPage() {
                                     key={g}
                                     onClick={() => setBodyGoal(g)}
                                     className={`py-2 rounded-lg text-sm font-bold transition-all ${bodyGoal === g
-                                            ? "bg-neon-green/20 text-neon-green border border-neon-green/40"
-                                            : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
+                                        ? "bg-neon-green/20 text-neon-green border border-neon-green/40"
+                                        : "bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10"
                                         }`}
                                 >
                                     {t(`goal.${g}`)}
@@ -319,48 +320,31 @@ export default function SettingsPage() {
                     </div>
                 </GlassCard>
             ) : (
-                <GlassCard
-                    onClick={handleStartEditBody}
-                    className="p-5 cursor-pointer hover:border-neon-green/30 transition-colors"
-                >
-                    <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-2">
-                            <User className="w-5 h-5 text-neon-green" />
-                            <span className="font-bold text-white text-sm">{t("settings.bodyParams")}</span>
+                profile?.gender ? (
+                    <BodyVisualizer
+                        gender={profile.gender}
+                        age={profile.age}
+                        weight={profile.weight_kg}
+                        height={profile.height_cm}
+                        activity={profile.activity_level}
+                        goal={profile.goal}
+                        onClick={handleStartEditBody}
+                    />
+                ) : (
+                    <GlassCard
+                        onClick={handleStartEditBody}
+                        className="p-5 cursor-pointer hover:border-neon-green/30 transition-colors"
+                    >
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <User className="w-5 h-5 text-neon-green" />
+                                <span className="font-bold text-white text-sm">{t("settings.bodyParams")}</span>
+                            </div>
+                            <Edit2 className="w-4 h-4 text-gray-500" />
                         </div>
-                        <Edit2 className="w-4 h-4 text-gray-500" />
-                    </div>
-                    {profile?.gender ? (
-                        <div className="grid grid-cols-3 gap-3 text-center">
-                            <div>
-                                <div className="text-xs text-gray-500">{t("calc.gender")}</div>
-                                <div className="text-sm text-white font-medium">{t(`calc.${profile.gender}`)}</div>
-                            </div>
-                            <div>
-                                <div className="text-xs text-gray-500">{t("calc.age")}</div>
-                                <div className="text-sm text-white font-medium">{profile.age}</div>
-                            </div>
-                            <div>
-                                <div className="text-xs text-gray-500">{t("calc.weight")}</div>
-                                <div className="text-sm text-white font-medium">{profile.weight_kg} {t("calc.kg")}</div>
-                            </div>
-                            <div>
-                                <div className="text-xs text-gray-500">{t("calc.height")}</div>
-                                <div className="text-sm text-white font-medium">{profile.height_cm} см</div>
-                            </div>
-                            <div>
-                                <div className="text-xs text-gray-500">{t("calc.activityLevel")}</div>
-                                <div className="text-sm text-white font-medium">{t(`activity.${profile.activity_level}`)}</div>
-                            </div>
-                            <div>
-                                <div className="text-xs text-gray-500">{t("calc.goal")}</div>
-                                <div className="text-sm text-white font-medium">{t(`goal.${profile.goal}`)}</div>
-                            </div>
-                        </div>
-                    ) : (
-                        <p className="text-sm text-gray-500">{t("calc.subtitle")}</p>
-                    )}
-                </GlassCard>
+                        <p className="text-sm text-gray-500 mt-2">{t("calc.subtitle")}</p>
+                    </GlassCard>
+                )
             )}
 
             {/* View Norms Button */}
