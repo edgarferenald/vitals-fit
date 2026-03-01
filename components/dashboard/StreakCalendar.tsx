@@ -77,16 +77,16 @@ export default function StreakCalendar() {
                 </div>
             ) : (
                 <>
-                    <div className="flex gap-[3px] sm:gap-1 overflow-x-auto pb-1">
+                    <div className="flex gap-[4px] sm:gap-[6px] lg:gap-2 overflow-x-auto pb-1">
                         {weeks.map((week, wi) => (
-                            <div key={wi} className="flex flex-col gap-[3px] sm:gap-1">
+                            <div key={wi} className="flex flex-col gap-[4px] sm:gap-[6px] lg:gap-2">
                                 {week.map((day) => {
                                     const count = activity[day.date] || 0;
                                     const isToday = day.date === todayStr;
                                     return (
                                         <div
                                             key={day.date}
-                                            className={`w-[10px] h-[10px] sm:w-[14px] sm:h-[14px] rounded-[2px] sm:rounded-[3px] ${getColor(count)} ${isToday ? "ring-1 ring-neon-green" : ""
+                                            className={`w-[14px] h-[14px] sm:w-[20px] sm:h-[20px] lg:w-[24px] lg:h-[24px] rounded-[3px] sm:rounded-[4px] ${getColor(count)} ${isToday ? "ring-1 ring-neon-green" : ""
                                                 } transition-colors`}
                                             title={`${day.date}: ${count} ${t("calendar.actions")}`}
                                         />
@@ -97,13 +97,13 @@ export default function StreakCalendar() {
                     </div>
 
                     {/* Legend */}
-                    <div className="flex items-center gap-1.5 mt-2 text-[9px] sm:text-[10px] text-gray-500">
+                    <div className="flex items-center gap-2 mt-3 text-[10px] sm:text-xs text-gray-500">
                         <span>{t("calendar.less")}</span>
-                        <div className="w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-[2px] bg-white/5" />
-                        <div className="w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-[2px] bg-neon-green/20" />
-                        <div className="w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-[2px] bg-neon-green/40" />
-                        <div className="w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-[2px] bg-neon-green/60" />
-                        <div className="w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-[2px] bg-neon-green/80" />
+                        <div className="w-[14px] h-[14px] sm:w-[16px] sm:h-[16px] lg:w-[20px] lg:h-[20px] rounded-[3px] bg-white/5" />
+                        <div className="w-[14px] h-[14px] sm:w-[16px] sm:h-[16px] lg:w-[20px] lg:h-[20px] rounded-[3px] bg-neon-green/20" />
+                        <div className="w-[14px] h-[14px] sm:w-[16px] sm:h-[16px] lg:w-[20px] lg:h-[20px] rounded-[3px] bg-neon-green/40" />
+                        <div className="w-[14px] h-[14px] sm:w-[16px] sm:h-[16px] lg:w-[20px] lg:h-[20px] rounded-[3px] bg-neon-green/60" />
+                        <div className="w-[14px] h-[14px] sm:w-[16px] sm:h-[16px] lg:w-[20px] lg:h-[20px] rounded-[3px] bg-neon-green/80" />
                         <span>{t("calendar.more")}</span>
                     </div>
                 </>
